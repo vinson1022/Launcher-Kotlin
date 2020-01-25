@@ -94,7 +94,7 @@ public class WidgetPreviewLoader {
     public CancellationSignal getPreview(WidgetItem item, int previewWidth,
             int previewHeight, WidgetCell caller) {
         String size = previewWidth + "x" + previewHeight;
-        WidgetCacheKey key = new WidgetCacheKey(item.componentName, item.user, size);
+        WidgetCacheKey key = new WidgetCacheKey(item.getComponentName(), item.getUser(), size);
 
         PreviewLoadTask task = new PreviewLoadTask(key, item, previewWidth, previewHeight, caller);
         task.executeOnExecutor(Utilities.THREAD_POOL_EXECUTOR);
@@ -141,10 +141,10 @@ public class WidgetPreviewLoader {
 
     @Thunk void writeToDb(WidgetCacheKey key, long[] versions, Bitmap preview) {
         ContentValues values = new ContentValues();
-        values.put(CacheDb.COLUMN_COMPONENT, key.componentName.flattenToShortString());
-        values.put(CacheDb.COLUMN_USER, mUserManager.getSerialNumberForUser(key.user));
+        values.put(CacheDb.COLUMN_COMPONENT, key.getComponentName().flattenToShortString());
+        values.put(CacheDb.COLUMN_USER, mUserManager.getSerialNumberForUser(key.getUser()));
         values.put(CacheDb.COLUMN_SIZE, key.size);
-        values.put(CacheDb.COLUMN_PACKAGE, key.componentName.getPackageName());
+        values.put(CacheDb.COLUMN_PACKAGE, key.getComponentName().getPackageName());
         values.put(CacheDb.COLUMN_VERSION, versions[0]);
         values.put(CacheDb.COLUMN_LAST_UPDATED, versions[1]);
         values.put(CacheDb.COLUMN_PREVIEW_BITMAP, Utilities.flattenBitmap(preview));
@@ -181,13 +181,13 @@ public class WidgetPreviewLoader {
         LongSparseArray<HashSet<String>> validPackages = new LongSparseArray<>();
 
         for (ComponentKey key : list) {
-            final long userId = mUserManager.getSerialNumberForUser(key.user);
+            final long userId = mUserManager.getSerialNumberForUser(key.getUser());
             HashSet<String> packages = validPackages.get(userId);
             if (packages == null) {
                 packages = new HashSet<>();
                 validPackages.put(userId, packages);
             }
-            packages.add(key.componentName.getPackageName());
+            packages.add(key.getComponentName().getPackageName());
         }
 
         LongSparseArray<HashSet<String>> packagesToDelete = new LongSparseArray<>();
@@ -256,8 +256,8 @@ public class WidgetPreviewLoader {
                     CacheDb.COLUMN_COMPONENT + " = ? AND " + CacheDb.COLUMN_USER + " = ? AND "
                             + CacheDb.COLUMN_SIZE + " = ?",
                     new String[]{
-                            key.componentName.flattenToShortString(),
-                            Long.toString(mUserManager.getSerialNumberForUser(key.user)),
+                            key.getComponentName().flattenToShortString(),
+                            Long.toString(mUserManager.getSerialNumberForUser(key.getUser())),
                             key.size
                     });
             // If cancelled, skip getting the blob and decoding it into a bitmap
@@ -585,7 +585,7 @@ public class WidgetPreviewLoader {
                 // which would gets re-written next time.
                 boolean persistable = mInfo.activityInfo == null
                         || mInfo.activityInfo.isPersistable();
-                mVersions = persistable ? getPackageVersion(mKey.componentName.getPackageName())
+                mVersions = persistable ? getPackageVersion(mKey.getComponentName().getPackageName())
                         : null;
 
                 // it's not in the db... we need to generate it

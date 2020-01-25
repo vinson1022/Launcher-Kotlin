@@ -337,7 +337,7 @@ public class DragView extends View {
             ShortcutKey key = ShortcutKey.fromItemInfo(info);
             DeepShortcutManager sm = DeepShortcutManager.getInstance(mLauncher);
             List<ShortcutInfoCompat> si = sm.queryForFullDetails(
-                    key.componentName.getPackageName(), Arrays.asList(key.getId()), key.user);
+                    key.getComponentName().getPackageName(), Arrays.asList(key.getId()), key.getUser());
             if (si.isEmpty()) {
                 return null;
             } else {

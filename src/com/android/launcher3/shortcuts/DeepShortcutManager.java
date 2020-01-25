@@ -107,9 +107,9 @@ public class DeepShortcutManager {
     @TargetApi(25)
     public void unpinShortcut(final ShortcutKey key) {
         if (Utilities.ATLEAST_NOUGAT_MR1) {
-            String packageName = key.componentName.getPackageName();
+            String packageName = key.getComponentName().getPackageName();
             String id = key.getId();
-            UserHandle user = key.user;
+            UserHandle user = key.getUser();
             List<String> pinnedIds = extractIds(queryForPinnedShortcuts(packageName, user));
             pinnedIds.remove(id);
             try {
@@ -129,9 +129,9 @@ public class DeepShortcutManager {
     @TargetApi(25)
     public void pinShortcut(final ShortcutKey key) {
         if (Utilities.ATLEAST_NOUGAT_MR1) {
-            String packageName = key.componentName.getPackageName();
+            String packageName = key.getComponentName().getPackageName();
             String id = key.getId();
-            UserHandle user = key.user;
+            UserHandle user = key.getUser();
             List<String> pinnedIds = extractIds(queryForPinnedShortcuts(packageName, user));
             pinnedIds.add(id);
             try {

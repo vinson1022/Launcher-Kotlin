@@ -59,8 +59,8 @@ public class WidgetItem extends ComponentKey implements Comparable<WidgetItem> {
 
         // Independent of how the labels compare, if only one of the two widget info belongs to
         // work profile, put that one in the back.
-        boolean thisWorkProfile = !sMyUserHandle.equals(user);
-        boolean otherWorkProfile = !sMyUserHandle.equals(another.user);
+        boolean thisWorkProfile = !sMyUserHandle.equals(getUser());
+        boolean otherWorkProfile = !sMyUserHandle.equals(another.getUser());
         if (thisWorkProfile ^ otherWorkProfile) {
             return thisWorkProfile ? 1 : -1;
         }

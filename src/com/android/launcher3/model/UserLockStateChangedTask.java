@@ -111,7 +111,7 @@ public class UserLockStateChangedTask extends BaseModelUpdateTask {
         // Remove shortcut id map for that user
         Iterator<ComponentKey> keysIter = dataModel.deepShortcutMap.keySet().iterator();
         while (keysIter.hasNext()) {
-            if (keysIter.next().user.equals(mUser)) {
+            if (keysIter.next().getUser().equals(mUser)) {
                 keysIter.remove();
             }
         }

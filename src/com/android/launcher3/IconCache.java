@@ -211,8 +211,8 @@ public class IconCache {
     private void removeFromMemCacheLocked(String packageName, UserHandle user) {
         HashSet<ComponentKey> forDeletion = new HashSet<>();
         for (ComponentKey key: mCache.keySet()) {
-            if (key.componentName.getPackageName().equals(packageName)
-                    && key.user.equals(user)) {
+            if (key.getComponentName().getPackageName().equals(packageName)
+                    && key.getUser().equals(user)) {
                 forDeletion.add(key);
             }
         }
@@ -667,7 +667,7 @@ public class IconCache {
                     // package updates.
                     ContentValues values = newContentValues(iconInfo.icon, lowResIcon, entry.color,
                             entry.title.toString(), packageName);
-                    addIconToDB(values, cacheKey.componentName, info,
+                    addIconToDB(values, cacheKey.getComponentName(), info,
                             mUserManager.getSerialNumberForUser(user));
 
                 } catch (NameNotFoundException e) {
@@ -691,8 +691,8 @@ public class IconCache {
                 new String[]{lowRes ? IconDB.COLUMN_ICON_LOW_RES : IconDB.COLUMN_ICON,
                         IconDB.COLUMN_ICON_COLOR, IconDB.COLUMN_LABEL},
                 IconDB.COLUMN_COMPONENT + " = ? AND " + IconDB.COLUMN_USER + " = ?",
-                new String[]{cacheKey.componentName.flattenToString(),
-                        Long.toString(mUserManager.getSerialNumberForUser(cacheKey.user))});
+                new String[]{cacheKey.getComponentName().flattenToString(),
+                        Long.toString(mUserManager.getSerialNumberForUser(cacheKey.getUser()))});
             if (c.moveToNext()) {
                 entry.icon = loadIconNoResize(c, 0, lowRes ? mLowResOptions : mHighResOptions);
                 // Set the alpha to be 255, so that we never have a wrong color
@@ -704,7 +704,7 @@ public class IconCache {
                     entry.contentDescription = "";
                 } else {
                     entry.contentDescription = mUserManager.getBadgedLabelForUser(
-                            entry.title, cacheKey.user);
+                            entry.title, cacheKey.getUser());
                 }
                 return true;
             }

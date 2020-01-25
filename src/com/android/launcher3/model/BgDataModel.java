@@ -366,8 +366,8 @@ public class BgDataModel {
             Iterator<ComponentKey> keysIter = deepShortcutMap.keySet().iterator();
             while (keysIter.hasNext()) {
                 ComponentKey next = keysIter.next();
-                if (next.componentName.getPackageName().equals(packageName)
-                        && next.user.equals(user)) {
+                if (next.getComponentName().getPackageName().equals(packageName)
+                        && next.getUser().equals(user)) {
                     keysIter.remove();
                 }
             }

@@ -194,7 +194,7 @@ public class UserEventDispatcher {
         }
         event.srcTarget[0].itemType = LauncherLogProto.ItemType.TASK;
         event.srcTarget[0].pageIndex = taskIndex;
-        fillComponentInfo(event.srcTarget[0], componentKey.componentName);
+        fillComponentInfo(event.srcTarget[0], componentKey.getComponentName());
         dispatchUserEvent(event, null);
         mAppOrTaskLaunch = true;
     }

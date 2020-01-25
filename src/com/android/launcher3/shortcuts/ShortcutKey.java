@@ -22,7 +22,7 @@ public class ShortcutKey extends ComponentKey {
     }
 
     public String getId() {
-        return componentName.getClassName();
+        return getComponentName().getClassName();
     }
 
     public static ShortcutKey fromInfo(ShortcutInfoCompat shortcutInfo) {

@@ -224,7 +224,7 @@ public class PopupDataProvider implements NotificationListener.NotificationsChan
                 // Remove widgets not associated with the correct user.
                 Iterator<WidgetItem> iterator = widgets.iterator();
                 while (iterator.hasNext()) {
-                    if (!iterator.next().user.equals(packageUserKey.mUser)) {
+                    if (!iterator.next().getUser().equals(packageUserKey.mUser)) {
                         iterator.remove();
                     }
                 }

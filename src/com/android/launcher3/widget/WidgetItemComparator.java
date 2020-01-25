@@ -35,8 +35,8 @@ public class WidgetItemComparator implements Comparator<WidgetItem> {
     public int compare(WidgetItem a, WidgetItem b) {
         // Independent of how the labels compare, if only one of the two widget info belongs to
         // work profile, put that one in the back.
-        boolean thisWorkProfile = !mMyUserHandle.equals(a.user);
-        boolean otherWorkProfile = !mMyUserHandle.equals(b.user);
+        boolean thisWorkProfile = !mMyUserHandle.equals(a.getUser());
+        boolean otherWorkProfile = !mMyUserHandle.equals(b.getUser());
         if (thisWorkProfile ^ otherWorkProfile) {
             return thisWorkProfile ? 1 : -1;
         }

@@ -141,8 +141,8 @@ public class WidgetsModel {
                 Iterator<WidgetItem> widgetItemIterator = mWidgetsList.get(packageItem).iterator();
                 while (widgetItemIterator.hasNext()) {
                     WidgetItem nextWidget = widgetItemIterator.next();
-                    if (nextWidget.componentName.getPackageName().equals(packageUser.mPackageName)
-                            && nextWidget.user.equals(packageUser.mUser)) {
+                    if (nextWidget.getComponentName().getPackageName().equals(packageUser.mPackageName)
+                            && nextWidget.getUser().equals(packageUser.mUser)) {
                         widgetItemIterator.remove();
                     }
                 }
@@ -167,7 +167,7 @@ public class WidgetsModel {
                     if (DEBUG) {
                         Log.d(TAG, String.format(
                                 "Widget %s : (%d X %d) can't fit on this device",
-                                item.componentName, minSpanX, minSpanY));
+                                item.getComponentName(), minSpanX, minSpanY));
                     }
                     continue;
                 }
@@ -176,23 +176,23 @@ public class WidgetsModel {
             if (mAppFilter == null) {
                 mAppFilter = AppFilter.newInstance(app.getContext());
             }
-            if (!mAppFilter.shouldShowApp(item.componentName)) {
+            if (!mAppFilter.shouldShowApp(item.getComponentName())) {
                 if (DEBUG) {
                     Log.d(TAG, String.format("%s is filtered and not added to the widget tray.",
-                            item.componentName));
+                            item.getComponentName()));
                 }
                 continue;
             }
 
-            String packageName = item.componentName.getPackageName();
+            String packageName = item.getComponentName().getPackageName();
             PackageItemInfo pInfo = tmpPackageItemInfos.get(packageName);
             if (pInfo == null) {
                 pInfo = new PackageItemInfo(packageName);
-                pInfo.user = item.user;
+                pInfo.user = item.getUser();
                 tmpPackageItemInfos.put(packageName,  pInfo);
             } else if (!myUser.equals(pInfo.user)) {
                 // Keep updating the user, until we get the primary user.
-                pInfo.user = item.user;
+                pInfo.user = item.getUser();
             }
             mWidgetsList.addToList(pInfo, item);
         }
