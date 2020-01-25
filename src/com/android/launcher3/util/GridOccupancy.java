@@ -88,7 +88,7 @@ public class GridOccupancy {
     }
 
     public void markCells(CellAndSpan cell, boolean value) {
-        markCells(cell.cellX, cell.cellY, cell.spanX, cell.spanY, value);
+        markCells(cell.getCellX(), cell.getCellY(), cell.getSpanX(), cell.getSpanY(), value);
     }
 
     public void markCells(ItemInfo item, boolean value) {

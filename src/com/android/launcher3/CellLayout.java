@@ -1252,12 +1252,12 @@ public class CellLayout extends ViewGroup {
         mTmpOccupied.markCells(c, false);
         mTmpOccupied.markCells(rectOccupiedByPotentialDrop, true);
 
-        findNearestArea(c.cellX, c.cellY, c.spanX, c.spanY, direction,
+        findNearestArea(c.getCellX(), c.getCellY(), c.getSpanX(), c.getSpanY(), direction,
                 mTmpOccupied.cells, null, mTempLocation);
 
         if (mTempLocation[0] >= 0 && mTempLocation[1] >= 0) {
-            c.cellX = mTempLocation[0];
-            c.cellY = mTempLocation[1];
+            c.setCellX(mTempLocation[0]);
+            c.setCellY(mTempLocation[1]);
             success = true;
         }
         mTmpOccupied.markCells(c, true);
@@ -1313,32 +1313,32 @@ public class CellLayout extends ViewGroup {
                 CellAndSpan cs = config.map.get(views.get(i));
                 switch (which) {
                     case LEFT:
-                        int left = cs.cellX;
-                        for (int j = cs.cellY; j < cs.cellY + cs.spanY; j++) {
+                        int left = cs.getCellX();
+                        for (int j = cs.getCellY(); j < cs.getCellY() + cs.getSpanY(); j++) {
                             if (left < leftEdge[j] || leftEdge[j] < 0) {
                                 leftEdge[j] = left;
                             }
                         }
                         break;
                     case RIGHT:
-                        int right = cs.cellX + cs.spanX;
-                        for (int j = cs.cellY; j < cs.cellY + cs.spanY; j++) {
+                        int right = cs.getCellX() + cs.getSpanX();
+                        for (int j = cs.getCellY(); j < cs.getCellY() + cs.getSpanY(); j++) {
                             if (right > rightEdge[j]) {
                                 rightEdge[j] = right;
                             }
                         }
                         break;
                     case TOP:
-                        int top = cs.cellY;
-                        for (int j = cs.cellX; j < cs.cellX + cs.spanX; j++) {
+                        int top = cs.getCellY();
+                        for (int j = cs.getCellX(); j < cs.getCellX() + cs.getSpanX(); j++) {
                             if (top < topEdge[j] || topEdge[j] < 0) {
                                 topEdge[j] = top;
                             }
                         }
                         break;
                     case BOTTOM:
-                        int bottom = cs.cellY + cs.spanY;
-                        for (int j = cs.cellX; j < cs.cellX + cs.spanX; j++) {
+                        int bottom = cs.getCellY() + cs.getSpanY();
+                        for (int j = cs.getCellX(); j < cs.getCellX() + cs.getSpanX(); j++) {
                             if (bottom > bottomEdge[j]) {
                                 bottomEdge[j] = bottom;
                             }
@@ -1358,29 +1358,29 @@ public class CellLayout extends ViewGroup {
 
             switch (whichEdge) {
                 case LEFT:
-                    for (int i = cs.cellY; i < cs.cellY + cs.spanY; i++) {
-                        if (leftEdge[i] == cs.cellX + cs.spanX) {
+                    for (int i = cs.getCellY(); i < cs.getCellY() + cs.getSpanY(); i++) {
+                        if (leftEdge[i] == cs.getCellX() + cs.getSpanX()) {
                             return true;
                         }
                     }
                     break;
                 case RIGHT:
-                    for (int i = cs.cellY; i < cs.cellY + cs.spanY; i++) {
-                        if (rightEdge[i] == cs.cellX) {
+                    for (int i = cs.getCellY(); i < cs.getCellY() + cs.getSpanY(); i++) {
+                        if (rightEdge[i] == cs.getCellX()) {
                             return true;
                         }
                     }
                     break;
                 case TOP:
-                    for (int i = cs.cellX; i < cs.cellX + cs.spanX; i++) {
-                        if (topEdge[i] == cs.cellY + cs.spanY) {
+                    for (int i = cs.getCellX(); i < cs.getCellX() + cs.getSpanX(); i++) {
+                        if (topEdge[i] == cs.getCellY() + cs.getSpanY()) {
                             return true;
                         }
                     }
                     break;
                 case BOTTOM:
-                    for (int i = cs.cellX; i < cs.cellX + cs.spanX; i++) {
-                        if (bottomEdge[i] == cs.cellY) {
+                    for (int i = cs.getCellX(); i < cs.getCellX() + cs.getSpanX(); i++) {
+                        if (bottomEdge[i] == cs.getCellY()) {
                             return true;
                         }
                     }
@@ -1394,17 +1394,17 @@ public class CellLayout extends ViewGroup {
                 CellAndSpan c = config.map.get(v);
                 switch (whichEdge) {
                     case LEFT:
-                        c.cellX -= delta;
+                        c.setCellX(c.getCellX() - delta);
                         break;
                     case RIGHT:
-                        c.cellX += delta;
+                        c.setCellX(c.getCellX() + delta);
                         break;
                     case TOP:
-                        c.cellY -= delta;
+                        c.setCellY(c.getCellY() - delta);
                         break;
                     case BOTTOM:
                     default:
-                        c.cellY += delta;
+                        c.setCellY(c.getCellY() + delta);
                         break;
                 }
             }
@@ -1431,14 +1431,14 @@ public class CellLayout extends ViewGroup {
                 CellAndSpan r = config.map.get(right);
                 switch (whichEdge) {
                     case LEFT:
-                        return (r.cellX + r.spanX) - (l.cellX + l.spanX);
+                        return (r.getCellX() + r.getSpanX()) - (l.getCellX() + l.getSpanX());
                     case RIGHT:
-                        return l.cellX - r.cellX;
+                        return l.getCellX() - r.getCellX();
                     case TOP:
-                        return (r.cellY + r.spanY) - (l.cellY + l.spanY);
+                        return (r.getCellY() + r.getSpanY()) - (l.getCellY() + l.getSpanY());
                     case BOTTOM:
                     default:
-                        return l.cellY - r.cellY;
+                        return l.getCellY() - r.getCellY();
                 }
             }
         }
@@ -1566,7 +1566,7 @@ public class CellLayout extends ViewGroup {
         // for interlocking.
         for (View v: views) {
             CellAndSpan c = currentState.map.get(v);
-            blockOccupied.markCells(c.cellX - left, c.cellY - top, c.spanX, c.spanY, true);
+            blockOccupied.markCells(c.getCellX() - left, c.getCellY() - top, c.getSpanX(), c.getSpanY(), true);
         }
 
         mTmpOccupied.markCells(rectOccupiedByPotentialDrop, true);
@@ -1581,8 +1581,8 @@ public class CellLayout extends ViewGroup {
             int deltaY = mTempLocation[1] - boundingRect.top;
             for (View v: views) {
                 CellAndSpan c = currentState.map.get(v);
-                c.cellX += deltaX;
-                c.cellY += deltaY;
+                c.setCellX(c.getCellX() + deltaX);
+                c.setCellY(c.getCellY() + deltaY);
             }
             success = true;
         }
@@ -1704,8 +1704,8 @@ public class CellLayout extends ViewGroup {
         if (ignoreView != null) {
             CellAndSpan c = solution.map.get(ignoreView);
             if (c != null) {
-                c.cellX = cellX;
-                c.cellY = cellY;
+                c.setCellX(cellX);
+                c.setCellY(cellY);
             }
         }
         Rect r0 = new Rect(cellX, cellY, cellX + spanX, cellY + spanY);
@@ -1714,7 +1714,7 @@ public class CellLayout extends ViewGroup {
             if (child == ignoreView) continue;
             CellAndSpan c = solution.map.get(child);
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
-            r1.set(c.cellX, c.cellY, c.cellX + c.spanX, c.cellY + c.spanY);
+            r1.set(c.getCellX(), c.getCellY(), c.getCellX() + c.getSpanX(), c.getCellY() + c.getSpanY());
             if (Rect.intersects(r0, r1)) {
                 if (!lp.canReorder) {
                     return false;
@@ -1798,10 +1798,10 @@ public class CellLayout extends ViewGroup {
             solution.isSolution = false;
         } else {
             solution.isSolution = true;
-            solution.cellX = result[0];
-            solution.cellY = result[1];
-            solution.spanX = spanX;
-            solution.spanY = spanY;
+            solution.setCellX(result[0]);
+            solution.setCellY(result[1]);
+            solution.setSpanX(spanX);
+            solution.setSpanY(spanY);
         }
         return solution;
     }
@@ -1831,10 +1831,10 @@ public class CellLayout extends ViewGroup {
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             CellAndSpan c = solution.map.get(child);
             if (c != null) {
-                lp.tmpCellX = c.cellX;
-                lp.tmpCellY = c.cellY;
-                lp.cellHSpan = c.spanX;
-                lp.cellVSpan = c.spanY;
+                lp.tmpCellX = c.getCellX();
+                lp.tmpCellY = c.getCellY();
+                lp.cellHSpan = c.getSpanX();
+                lp.cellVSpan = c.getSpanY();
                 mTmpOccupied.markCells(c, true);
             }
         }
@@ -1853,7 +1853,7 @@ public class CellLayout extends ViewGroup {
             if (child == dragView) continue;
             CellAndSpan c = solution.map.get(child);
             if (c != null) {
-                animateChildToPosition(child, c.cellX, c.cellY, REORDER_ANIMATION_DURATION, 0,
+                animateChildToPosition(child, c.getCellX(), c.getCellY(), REORDER_ANIMATION_DURATION, 0,
                         DESTRUCTIVE_REORDER, false);
                 occupied.markCells(c, true);
             }
@@ -1878,7 +1878,7 @@ public class CellLayout extends ViewGroup {
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             if (c != null && !skip) {
                 ReorderPreviewAnimation rha = new ReorderPreviewAnimation(child, mode, lp.cellX,
-                        lp.cellY, c.cellX, c.cellY, c.spanX, c.spanY);
+                        lp.cellY, c.getCellX(), c.getCellY(), c.getSpanX(), c.getSpanY());
                 rha.animate();
             }
         }
@@ -2095,10 +2095,10 @@ public class CellLayout extends ViewGroup {
                 resultSpan);
         if (result[0] >= 0 && result[1] >= 0) {
             copyCurrentStateToSolution(solution, false);
-            solution.cellX = result[0];
-            solution.cellY = result[1];
-            solution.spanX = resultSpan[0];
-            solution.spanY = resultSpan[1];
+            solution.setCellX(result[0]);
+            solution.setCellY(result[1]);
+            solution.setSpanX(resultSpan[0]);
+            solution.setSpanY(resultSpan[1]);
             solution.isSolution = true;
         } else {
             solution.isSolution = false;
@@ -2282,10 +2282,10 @@ public class CellLayout extends ViewGroup {
             if (finalSolution != null) {
                 beginOrAdjustReorderPreviewAnimations(finalSolution, dragView, 0,
                         ReorderPreviewAnimation.MODE_HINT);
-                result[0] = finalSolution.cellX;
-                result[1] = finalSolution.cellY;
-                resultSpan[0] = finalSolution.spanX;
-                resultSpan[1] = finalSolution.spanY;
+                result[0] = finalSolution.getCellX();
+                result[1] = finalSolution.getCellY();
+                resultSpan[0] = finalSolution.getSpanX();
+                resultSpan[1] = finalSolution.getSpanY();
             } else {
                 result[0] = result[1] = resultSpan[0] = resultSpan[1] = -1;
             }
@@ -2298,10 +2298,10 @@ public class CellLayout extends ViewGroup {
         }
 
         if (finalSolution != null) {
-            result[0] = finalSolution.cellX;
-            result[1] = finalSolution.cellY;
-            resultSpan[0] = finalSolution.spanX;
-            resultSpan[1] = finalSolution.spanY;
+            result[0] = finalSolution.getCellX();
+            result[1] = finalSolution.getCellY();
+            resultSpan[0] = finalSolution.getSpanX();
+            resultSpan[1] = finalSolution.getSpanY();
 
             // If we're just testing for a possible location (MODE_ACCEPT_DROP), we don't bother
             // committing anything or animating anything as we just want to determine if a solution
@@ -2371,7 +2371,7 @@ public class CellLayout extends ViewGroup {
         }
 
         int area() {
-            return spanX * spanY;
+            return getSpanX() * getSpanY();
         }
 
         void getBoundingRectForViews(ArrayList<View> views, Rect outRect) {
@@ -2379,10 +2379,10 @@ public class CellLayout extends ViewGroup {
             for (View v: views) {
                 CellAndSpan c = map.get(v);
                 if (first) {
-                    outRect.set(c.cellX, c.cellY, c.cellX + c.spanX, c.cellY + c.spanY);
+                    outRect.set(c.getCellX(), c.getCellY(), c.getCellX() + c.getSpanX(), c.getCellY() + c.getSpanY());
                     first = false;
                 } else {
-                    outRect.union(c.cellX, c.cellY, c.cellX + c.spanX, c.cellY + c.spanY);
+                    outRect.union(c.getCellX(), c.getCellY(), c.getCellX() + c.getSpanX(), c.getCellY() + c.getSpanY());
                 }
             }
         }
@@ -2707,10 +2707,10 @@ public class CellLayout extends ViewGroup {
         final long container;
 
         public CellInfo(View v, ItemInfo info) {
-            cellX = info.cellX;
-            cellY = info.cellY;
-            spanX = info.spanX;
-            spanY = info.spanY;
+            setCellX(info.cellX);
+            setCellY(info.cellY);
+            setSpanX(info.spanX);
+            setSpanY(info.spanY);
             cell = v;
             screenId = info.screenId;
             container = info.container;
@@ -2719,7 +2719,7 @@ public class CellLayout extends ViewGroup {
         @Override
         public String toString() {
             return "Cell[view=" + (cell == null ? "null" : cell.getClass())
-                    + ", x=" + cellX + ", y=" + cellY + "]";
+                    + ", x=" + getCellX() + ", y=" + getCellY() + "]";
         }
     }
 

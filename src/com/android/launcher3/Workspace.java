@@ -1629,8 +1629,8 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
             int spanY;
             if (mDragInfo != null) {
                 final CellLayout.CellInfo dragCellInfo = mDragInfo;
-                spanX = dragCellInfo.spanX;
-                spanY = dragCellInfo.spanY;
+                spanX = dragCellInfo.getSpanX();
+                spanY = dragCellInfo.getSpanY();
             } else {
                 spanX = d.dragInfo.spanX;
                 spanY = d.dragInfo.spanY;
@@ -1744,8 +1744,8 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         boolean hasntMoved = false;
         if (mDragInfo != null) {
             CellLayout cellParent = getParentCellLayoutForView(mDragInfo.cell);
-            hasntMoved = (mDragInfo.cellX == targetCell[0] &&
-                    mDragInfo.cellY == targetCell[1]) && (cellParent == target);
+            hasntMoved = (mDragInfo.getCellX() == targetCell[0] &&
+                    mDragInfo.getCellY() == targetCell[1]) && (cellParent == target);
         }
 
         if (v == null || hasntMoved || !mCreateUserFolderOnDrop) return false;
@@ -1854,8 +1854,8 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
                         LauncherSettings.Favorites.CONTAINER_DESKTOP;
                 long screenId = (mTargetCell[0] < 0) ?
                         mDragInfo.screenId : getIdForScreen(dropTargetLayout);
-                int spanX = mDragInfo != null ? mDragInfo.spanX : 1;
-                int spanY = mDragInfo != null ? mDragInfo.spanY : 1;
+                int spanX = mDragInfo != null ? mDragInfo.getSpanX() : 1;
+                int spanY = mDragInfo != null ? mDragInfo.getSpanY() : 1;
                 // First we find the cell nearest to point at which the item is
                 // dropped, without any consideration to whether there is an item there.
 
@@ -2531,8 +2531,8 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         int spanX = info.spanX;
         int spanY = info.spanY;
         if (mDragInfo != null) {
-            spanX = mDragInfo.spanX;
-            spanY = mDragInfo.spanY;
+            spanX = mDragInfo.getSpanX();
+            spanY = mDragInfo.getSpanY();
         }
 
         final long container = mLauncher.isHotseatLayout(cellLayout) ?
