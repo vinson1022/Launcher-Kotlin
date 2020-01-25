@@ -68,7 +68,7 @@ public class PendingRequestArgs extends ItemInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         ContentValues itemValues = new ContentValues();
-        writeToValues(new ContentWriter(itemValues, null));
+        writeToValues(new ContentWriter(null, itemValues));
         itemValues.writeToParcel(dest, flags);
         dest.writeParcelable(user, flags);
 
