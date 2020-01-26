@@ -13,40 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.android.launcher3.util
 
-package com.android.launcher3.util;
-
-import android.os.SystemClock;
+import android.os.SystemClock
 
 /**
  * Determines whether a fling should be blocked. Currently we block flings when crossing thresholds
  * to new states, and unblock after a short duration.
  */
-public class FlingBlockCheck {
-    // Allow flinging to a new state after waiting this many milliseconds.
-    private static final long UNBLOCK_FLING_PAUSE_DURATION = 200;
-
-    private boolean mBlockFling;
-    private long mBlockFlingTime;
-
-    public void blockFling() {
-        mBlockFling = true;
-        mBlockFlingTime = SystemClock.uptimeMillis();
+class FlingBlockCheck {
+    var isBlocked = false
+        private set
+    private var blockFlingTime = 0L
+    fun blockFling() {
+        isBlocked = true
+        blockFlingTime = SystemClock.uptimeMillis()
     }
 
-    public void unblockFling() {
-        mBlockFling = false;
-        mBlockFlingTime = 0;
+    fun unblockFling() {
+        isBlocked = false
+        blockFlingTime = 0
     }
 
-    public void onEvent() {
+    fun onEvent() {
         // We prevent flinging after passing a state, but allow it if the user pauses briefly.
-        if (SystemClock.uptimeMillis() - mBlockFlingTime >= UNBLOCK_FLING_PAUSE_DURATION) {
-            mBlockFling = false;
+        if (SystemClock.uptimeMillis() - blockFlingTime >= UNBLOCK_FLING_PAUSE_DURATION) {
+            isBlocked = false
         }
     }
 
-    public boolean isBlocked() {
-        return mBlockFling;
+    companion object {
+        // Allow flinging to a new state after waiting this many milliseconds.
+        private const val UNBLOCK_FLING_PAUSE_DURATION = 200L
     }
 }
