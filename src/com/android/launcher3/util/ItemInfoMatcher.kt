@@ -30,7 +30,7 @@ import java.util.*
  * A utility class to check for [ItemInfo]
  */
 abstract class ItemInfoMatcher {
-    abstract fun matches(info: ItemInfo, cn: ComponentName): Boolean
+    abstract fun matches(info: ItemInfo, cn: ComponentName?): Boolean
     /**
      * Filters {@param infos} to those satisfying the [.matches].
      */
@@ -69,7 +69,7 @@ abstract class ItemInfoMatcher {
     fun or(matcher: ItemInfoMatcher): ItemInfoMatcher {
         val that = this
         return object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName)
+            override fun matches(info: ItemInfo, cn: ComponentName?)
                     = that.matches(info, cn) || matcher.matches(info, cn)
         }
     }
@@ -80,7 +80,7 @@ abstract class ItemInfoMatcher {
     fun and(matcher: ItemInfoMatcher): ItemInfoMatcher {
         val that = this
         return object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName)
+            override fun matches(info: ItemInfo, cn: ComponentName?)
                     = that.matches(info, cn) && matcher.matches(info, cn)
         }
     }
@@ -92,35 +92,35 @@ abstract class ItemInfoMatcher {
          */
         @JvmStatic
         fun not(matcher: ItemInfoMatcher) = object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName) = !matcher.matches(info, cn)
+            override fun matches(info: ItemInfo, cn: ComponentName?) = !matcher.matches(info, cn)
         }
 
         @JvmStatic
         fun ofUser(user: UserHandle) = object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName) = info.user == user
+            override fun matches(info: ItemInfo, cn: ComponentName?) = info.user == user
         }
 
         @JvmStatic
         fun ofComponents(components: HashSet<ComponentName>, user: UserHandle) = object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName)
-                    = components.contains(cn) && info.user == user
+            override fun matches(info: ItemInfo, cn: ComponentName?)
+                    = cn != null && components.contains(cn) && info.user == user
         }
 
         @JvmStatic
         fun ofPackages(packageNames: HashSet<String>, user: UserHandle) = object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName)
-                    = packageNames.contains(cn.packageName) && info.user == user
+            override fun matches(info: ItemInfo, cn: ComponentName?)
+                    = cn != null && packageNames.contains(cn.packageName) && info.user == user
         }
 
         @JvmStatic
         fun ofShortcutKeys(keys: HashSet<ShortcutKey>) = object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName)
+            override fun matches(info: ItemInfo, cn: ComponentName?)
                     = info.itemType == ITEM_TYPE_DEEP_SHORTCUT && keys.contains(ShortcutKey.fromItemInfo(info))
         }
 
         @JvmStatic
         fun ofItemIds(ids: LongArrayMap<Boolean>, matchDefault: Boolean) = object : ItemInfoMatcher() {
-            override fun matches(info: ItemInfo, cn: ComponentName) = ids[info.id, matchDefault]
+            override fun matches(info: ItemInfo, cn: ComponentName?) = ids[info.id, matchDefault]
         }
     }
 }

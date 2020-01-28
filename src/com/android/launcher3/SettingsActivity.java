@@ -185,7 +185,9 @@ public class SettingsActivity extends Activity {
                     break;
                 }
             }
-            new ListViewHighlighter(list, position);
+            if (position > 0 && list.getChildCount() > 0) {
+                new ListViewHighlighter(list, position);
+            }
             mPreferenceHighlighted = true;
         }
 
