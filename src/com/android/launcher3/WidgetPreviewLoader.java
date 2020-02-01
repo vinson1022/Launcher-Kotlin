@@ -192,7 +192,7 @@ public class WidgetPreviewLoader {
 
         LongSparseArray<HashSet<String>> packagesToDelete = new LongSparseArray<>();
         long passedUserId = packageUser == null ? 0
-                : mUserManager.getSerialNumberForUser(packageUser.mUser);
+                : mUserManager.getSerialNumberForUser(packageUser.userHandle);
         Cursor c = null;
         try {
             c = mDb.query(
@@ -205,7 +205,7 @@ public class WidgetPreviewLoader {
                 long lastUpdated = c.getLong(2);
                 long version = c.getLong(3);
 
-                if (packageUser != null && (!pkg.equals(packageUser.mPackageName)
+                if (packageUser != null && (!pkg.equals(packageUser.packageName)
                         || userId != passedUserId)) {
                     // This preview is associated with a different package/user, no need to remove.
                     continue;

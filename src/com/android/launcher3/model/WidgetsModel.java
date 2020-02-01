@@ -128,7 +128,7 @@ public class WidgetsModel {
             // Only clear the widgets for the given package/user.
             PackageItemInfo packageItem = null;
             for (PackageItemInfo item : mWidgetsList.keySet()) {
-                if (item.packageName.equals(packageUser.mPackageName)) {
+                if (item.packageName.equals(packageUser.packageName)) {
                     packageItem = item;
                     break;
                 }
@@ -141,8 +141,8 @@ public class WidgetsModel {
                 Iterator<WidgetItem> widgetItemIterator = mWidgetsList.get(packageItem).iterator();
                 while (widgetItemIterator.hasNext()) {
                     WidgetItem nextWidget = widgetItemIterator.next();
-                    if (nextWidget.getComponentName().getPackageName().equals(packageUser.mPackageName)
-                            && nextWidget.getUser().equals(packageUser.mUser)) {
+                    if (nextWidget.getComponentName().getPackageName().equals(packageUser.packageName)
+                            && nextWidget.getUser().equals(packageUser.userHandle)) {
                         widgetItemIterator.remove();
                     }
                 }

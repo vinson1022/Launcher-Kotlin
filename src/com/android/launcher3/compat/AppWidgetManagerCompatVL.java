@@ -65,16 +65,16 @@ class AppWidgetManagerCompatVL extends AppWidgetManagerCompat {
         }
         // Only get providers for the given package/user.
         List<AppWidgetProviderInfo> providers = new ArrayList<>(mAppWidgetManager
-                .getInstalledProvidersForProfile(packageUser.mUser));
+                .getInstalledProvidersForProfile(packageUser.userHandle));
         Iterator<AppWidgetProviderInfo> iterator = providers.iterator();
         while (iterator.hasNext()) {
-            if (!iterator.next().provider.getPackageName().equals(packageUser.mPackageName)) {
+            if (!iterator.next().provider.getPackageName().equals(packageUser.packageName)) {
                 iterator.remove();
             }
         }
 
-        if (FeatureFlags.ENABLE_CUSTOM_WIDGETS && Process.myUserHandle().equals(packageUser.mUser)
-                && mContext.getPackageName().equals(packageUser.mPackageName)) {
+        if (FeatureFlags.ENABLE_CUSTOM_WIDGETS && Process.myUserHandle().equals(packageUser.userHandle)
+                && mContext.getPackageName().equals(packageUser.packageName)) {
             providers.addAll(CustomWidgetParser.getCustomWidgets(mContext));
         }
         return providers;

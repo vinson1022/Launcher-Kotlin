@@ -73,8 +73,8 @@ public class LauncherAppsCompatVO extends LauncherAppsCompatVL {
             packageName = null;
         } else {
             users = new ArrayList<>(1);
-            users.add(packageUser.mUser);
-            packageName = packageUser.mPackageName;
+            users.add(packageUser.userHandle);
+            packageName = packageUser.packageName;
         }
         for (UserHandle user : users) {
             boolean ignoreTargetSdk = myUser.equals(user);

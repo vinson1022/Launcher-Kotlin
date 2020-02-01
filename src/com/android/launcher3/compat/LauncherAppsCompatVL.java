@@ -189,13 +189,13 @@ public class LauncherAppsCompatVL extends LauncherAppsCompat {
     public List<ShortcutConfigActivityInfo> getCustomShortcutActivityList(
             @Nullable PackageUserKey packageUser) {
         List<ShortcutConfigActivityInfo> result = new ArrayList<>();
-        if (packageUser != null && !packageUser.mUser.equals(Process.myUserHandle())) {
+        if (packageUser != null && !packageUser.userHandle.equals(Process.myUserHandle())) {
             return result;
         }
         PackageManager pm = mContext.getPackageManager();
         for (ResolveInfo info :
                 pm.queryIntentActivities(new Intent(Intent.ACTION_CREATE_SHORTCUT), 0)) {
-            if (packageUser == null || packageUser.mPackageName
+            if (packageUser == null || packageUser.packageName
                     .equals(info.activityInfo.packageName)) {
                 result.add(new ShortcutConfigActivityInfoVL(info.activityInfo, pm));
             }
