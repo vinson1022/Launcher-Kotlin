@@ -34,9 +34,8 @@ class SystemUiController(private val window: Window) {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun updateUiState(uiState: Int, flags: Int) {
-        if (states[uiState] == flags) {
-            return
-        }
+        if (states[uiState] == flags) return
+
         states[uiState] = flags
         val oldFlags = window.decorView.systemUiVisibility
         // Apply the state flags in priority order
@@ -60,7 +59,7 @@ class SystemUiController(private val window: Window) {
         }
     }
 
-    override fun toString() = "mStates=${states.contentToString()}"
+    override fun toString() = "States=${states.contentToString()}"
 
     companion object {
         // Various UI states in increasing order of priority
@@ -69,6 +68,7 @@ class SystemUiController(private val window: Window) {
         const val UI_STATE_WIDGET_BOTTOM_SHEET = 2
         const val UI_STATE_ROOT_VIEW = 3
         const val UI_STATE_OVERVIEW = 4
+
         const val FLAG_LIGHT_NAV = 1 shl 0
         const val FLAG_DARK_NAV = 1 shl 1
         const val FLAG_LIGHT_STATUS = 1 shl 2

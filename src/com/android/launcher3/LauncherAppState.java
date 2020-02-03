@@ -31,6 +31,7 @@ import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.notification.NotificationListener;
 import com.android.launcher3.util.ConfigMonitor;
 import com.android.launcher3.util.Preconditions;
+import com.android.launcher3.util.Secure;
 import com.android.launcher3.util.SettingsObserver;
 
 import java.util.concurrent.Callable;
@@ -118,7 +119,7 @@ public class LauncherAppState {
             mNotificationBadgingObserver = null;
         } else {
             // Register an observer to rebind the notification listener when badging is re-enabled.
-            mNotificationBadgingObserver = new SettingsObserver.Secure(
+            mNotificationBadgingObserver = new Secure(
                     mContext.getContentResolver()) {
                 @Override
                 public void onSettingChanged(boolean isNotificationBadgingEnabled) {

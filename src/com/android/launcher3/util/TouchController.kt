@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.android.launcher3.util
 
-package com.android.launcher3.util;
+import android.view.MotionEvent
 
-import android.view.MotionEvent;
-
-public interface TouchController {
-
+interface TouchController {
     /**
      * Called when the draglayer receives touch event.
      */
-    boolean onControllerTouchEvent(MotionEvent ev);
+    fun onControllerTouchEvent(ev: MotionEvent?): Boolean
 
     /**
      * Called when the draglayer receives a intercept touch event.
      */
-    boolean onControllerInterceptTouchEvent(MotionEvent ev);
+    fun onControllerInterceptTouchEvent(ev: MotionEvent?): Boolean
 }

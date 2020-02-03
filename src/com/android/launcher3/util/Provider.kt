@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.android.launcher3.util;
+package com.android.launcher3.util
 
 /**
  * Utility class to allow lazy initialization of objects.
  */
-public abstract class Provider<T> {
-
+abstract class Provider<T> {
     /**
      * Initializes and returns the object. This may contain expensive operations not suitable
      * to UI thread.
      */
-    public abstract T get();
+    abstract fun get(): T
 
-    public static <T> Provider<T> of (final T value) {
-        return new Provider<T>() {
-            @Override
-            public T get() {
-                return value;
+    companion object {
+        @JvmStatic
+        fun <T> of(value: T): Provider<T> {
+            return object : Provider<T>() {
+                override fun get(): T {
+                    return value
+                }
             }
-        };
+        }
     }
 }

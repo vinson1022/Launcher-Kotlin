@@ -16,9 +16,6 @@
 
 package com.android.launcher3;
 
-import static com.android.launcher3.states.RotationHelper.ALLOW_ROTATION_PREFERENCE_KEY;
-import static com.android.launcher3.states.RotationHelper.getAllowRotationDefaultValue;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,10 +42,13 @@ import android.widget.ListView;
 import com.android.launcher3.graphics.IconShapeOverride;
 import com.android.launcher3.notification.NotificationListener;
 import com.android.launcher3.util.ListViewHighlighter;
-import com.android.launcher3.util.SettingsObserver;
+import com.android.launcher3.util.Secure;
 import com.android.launcher3.views.ButtonPreference;
 
 import java.util.Objects;
+
+import static com.android.launcher3.states.RotationHelper.ALLOW_ROTATION_PREFERENCE_KEY;
+import static com.android.launcher3.states.RotationHelper.getAllowRotationDefaultValue;
 
 /**
  * Settings activity for Launcher. Currently implements the following setting: Allow rotation
@@ -224,7 +224,7 @@ public class SettingsActivity extends Activity {
      * Content observer which listens for system badging setting changes,
      * and updates the launcher badging setting subtext accordingly.
      */
-    private static class IconBadgingObserver extends SettingsObserver.Secure
+    private static class IconBadgingObserver extends Secure
             implements Preference.OnPreferenceClickListener {
 
         private final ButtonPreference mBadgingPref;

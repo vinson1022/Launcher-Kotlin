@@ -103,7 +103,7 @@ class ListViewHighlighter(
 
     private val highlightBackground: ColorDrawable
         get() {
-            val color = ColorUtils.setAlphaComponent(Themes.getColorAccent(listView.context), 26)
+            val color = ColorUtils.setAlphaComponent(getColorAccent(listView.context), 26)
             if (colorAnimated) {
                 return ColorDrawable(color)
             }

@@ -35,6 +35,7 @@ import android.util.Pair;
 
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.util.PackageUserKey;
+import com.android.launcher3.util.Secure;
 import com.android.launcher3.util.SettingsObserver;
 
 import java.util.ArrayList;
@@ -194,7 +195,7 @@ public class NotificationListener extends NotificationListenerService {
         super.onListenerConnected();
         sIsConnected = true;
 
-        mNotificationBadgingObserver = new SettingsObserver.Secure(getContentResolver()) {
+        mNotificationBadgingObserver = new Secure(getContentResolver()) {
             @Override
             public void onSettingChanged(boolean isNotificationBadgingEnabled) {
                 if (!isNotificationBadgingEnabled) {
