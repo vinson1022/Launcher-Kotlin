@@ -106,7 +106,7 @@ public abstract class InternalStateHandler extends Binder {
 
         @Override
         public void run() {
-            LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+            LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
             if (app == null) {
                 return;
             }

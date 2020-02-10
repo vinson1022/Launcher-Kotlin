@@ -107,7 +107,7 @@ public class AppWidgetsRestoredReceiver extends BroadcastReceiver {
             }
         }
 
-        LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+        LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
         if (app != null) {
             app.getModel().forceReload();
         }

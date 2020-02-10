@@ -98,7 +98,7 @@ public class LauncherProvider extends ContentProvider {
      */
     @Override
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
-        LauncherAppState appState = LauncherAppState.getInstanceNoCreate();
+        LauncherAppState appState = LauncherAppState.Companion.getInstanceNoCreate();
         if (appState == null || !appState.getModel().isModelLoaded()) {
             return;
         }
@@ -184,7 +184,7 @@ public class LauncherProvider extends ContentProvider {
 
     private void reloadLauncherIfExternal() {
         if (Utilities.ATLEAST_MARSHMALLOW && Binder.getCallingPid() != Process.myPid()) {
-            LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+            LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
             if (app != null) {
                 app.getModel().forceReload();
             }
@@ -215,7 +215,7 @@ public class LauncherProvider extends ContentProvider {
             reloadLauncherIfExternal();
         } else {
             // Deprecated behavior to support legacy devices which rely on provider callbacks.
-            LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+            LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
             if (app != null && "true".equals(uri.getQueryParameter("isExternalAdd"))) {
                 app.getModel().forceReload();
             }

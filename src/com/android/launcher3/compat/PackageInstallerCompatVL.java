@@ -86,7 +86,7 @@ public class PackageInstallerCompatVL extends PackageInstallerCompat {
     }
 
     @Thunk void sendUpdate(PackageInstallInfo info) {
-        LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+        LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
         if (app != null) {
             app.getModel().setPackageState(info);
         }
@@ -98,7 +98,7 @@ public class PackageInstallerCompatVL extends PackageInstallerCompat {
         public void onCreated(int sessionId) {
             SessionInfo sessionInfo = pushSessionDisplayToLauncher(sessionId);
             if (FeatureFlags.LAUNCHER3_PROMISE_APPS_IN_ALL_APPS && sessionInfo != null) {
-                LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+                LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
                 if (app != null) {
                     app.getModel().onInstallSessionCreated(
                             PackageInstallInfo.fromInstallingState(sessionInfo));
@@ -141,7 +141,7 @@ public class PackageInstallerCompatVL extends PackageInstallerCompat {
             if (session != null && session.getAppPackageName() != null) {
                 mActiveSessions.put(sessionId, session.getAppPackageName());
                 addSessionInfoToCache(session, Process.myUserHandle());
-                LauncherAppState app = LauncherAppState.getInstanceNoCreate();
+                LauncherAppState app = LauncherAppState.Companion.getInstanceNoCreate();
                 if (app != null) {
                     app.getModel().updateSessionDisplayInfo(session.getAppPackageName());
                 }

@@ -149,7 +149,7 @@ class WallpaperOffsetInterpolator(private val workspace: Workspace) : BroadcastR
         updateOffset()
     }
 
-    private class OffsetHandler(context: Context) : Handler(UiThreadHelper.getBackgroundLooper()) {
+    private class OffsetHandler(context: Context) : Handler(backgroundLooper) {
         private val interpolator = DEACCEL_1_5
         private val wallpaperManager = WallpaperManager.getInstance(context)
         private var currentOffset = 0.5f // to force an initial update

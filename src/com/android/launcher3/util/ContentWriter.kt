@@ -55,7 +55,7 @@ class ContentWriter {
     fun put(key: String, value: Long) = apply { values.put(key, value) }
     fun put(key: String, value: String) = apply { values.put(key, value) }
     fun put(key: String, value: CharSequence) = apply { values.put(key, value.toString()) }
-    fun put(key: String, value: Intent) = apply { values.put(key, value.toUri(0)) }
+    fun put(key: String, value: Intent?) = apply { values.put(key, value?.toUri(0)) }
     fun put(key: String, user: UserHandle) = apply { put(key, UserManagerCompat.getInstance(context).getSerialNumberForUser(user)) }
 
     fun putIcon(value: Bitmap, userHandle: UserHandle) = apply {

@@ -20,6 +20,7 @@ import android.appwidget.AppWidgetHostView;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Process;
+import android.util.Log;
 
 import com.android.launcher3.model.PackageItemInfo;
 import com.android.launcher3.util.ContentWriter;
@@ -134,6 +135,8 @@ public class LauncherAppWidgetInfo extends ItemInfo {
     @Override
     public void onAddToDatabase(ContentWriter writer) {
         super.onAddToDatabase(writer);
+        Log.d("Vinson", "onAddToDatabase: " + appWidgetId + ", " + providerName.flattenToString()
+                + ", " + restoreStatus + ", " + bindOptions + ", ");
         writer.put(LauncherSettings.Favorites.APPWIDGET_ID, appWidgetId)
                 .put(LauncherSettings.Favorites.APPWIDGET_PROVIDER, providerName.flattenToString())
                 .put(LauncherSettings.Favorites.RESTORED, restoreStatus)
