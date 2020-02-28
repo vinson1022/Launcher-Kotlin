@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.launcher3.touch;
+package com.android.launcher3.touch
+
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 /**
  * Utility methods for overscroll damping and related effect.
  */
-public class OverScroll {
-
-    private static final float OVERSCROLL_DAMP_FACTOR = 0.07f;
-
+object OverScroll {
+    private const val OVERSCROLL_DAMP_FACTOR = 0.07f
     /**
      * This curve determines how the effect of scrolling over the limits of the page diminishes
      * as the user pulls further and further from the bounds
@@ -29,9 +30,10 @@ public class OverScroll {
      * @param f The percentage of how much the user has overscrolled.
      * @return A transformed percentage based on the influence curve.
      */
-    private static float overScrollInfluenceCurve(float f) {
-        f -= 1.0f;
-        return f * f * f + 1.0f;
+    private fun overScrollInfluenceCurve(f: Float): Float {
+        var _f = f
+        _f -= 1.0f
+        return _f * _f * _f + 1.0f
     }
 
     /**
@@ -39,17 +41,15 @@ public class OverScroll {
      * @param max The maximum amount that the View can overscroll.
      * @return The dampened overscroll amount.
      */
-    public static int dampedScroll(float amount, int max) {
-        if (Float.compare(amount, 0) == 0) return 0;
-
-        float f = amount / max;
-        f = f / (Math.abs(f)) * (overScrollInfluenceCurve(Math.abs(f)));
-
+    @JvmStatic
+    fun dampedScroll(amount: Float, max: Int): Int {
+        if (amount.compareTo(0f) == 0) return 0
+        var f = amount / max
+        f = f / abs(f) * overScrollInfluenceCurve(abs(f))
         // Clamp this factor, f, to -1 < f < 1
-        if (Math.abs(f) >= 1) {
-            f /= Math.abs(f);
+        if (abs(f) >= 1) {
+            f /= abs(f)
         }
-
-        return Math.round(OVERSCROLL_DAMP_FACTOR * f * max);
+        return (OVERSCROLL_DAMP_FACTOR * f * max).roundToInt()
     }
 }
