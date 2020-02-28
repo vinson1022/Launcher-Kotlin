@@ -20,12 +20,12 @@ import static com.android.launcher3.util.SystemUiController.UI_STATE_OVERVIEW;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.IntDef;
+import android.support.v4.app.FragmentActivity;
 import android.view.View.AccessibilityDelegate;
 
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
@@ -40,7 +40,7 @@ import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
 
-public abstract class BaseActivity extends Activity implements UserEventDelegate{
+public abstract class BaseActivity extends FragmentActivity implements UserEventDelegate{
 
     public static final int INVISIBLE_BY_STATE_HANDLER = 1 << 0;
     public static final int INVISIBLE_BY_APP_TRANSITIONS = 1 << 1;

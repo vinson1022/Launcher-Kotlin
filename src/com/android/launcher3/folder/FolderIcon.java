@@ -25,7 +25,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -167,7 +166,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         lp.topMargin = grid.iconSizePx + grid.iconDrawablePaddingPx;
 
         icon.setTag(folderInfo);
-        icon.setOnClickListener(ItemClickHandler.INSTANCE);
+        icon.setOnClickListener(ItemClickHandler.clickListener);
         icon.mInfo = folderInfo;
         icon.mLauncher = launcher;
         icon.mBadgeRenderer = launcher.getDeviceProfile().mBadgeRenderer;

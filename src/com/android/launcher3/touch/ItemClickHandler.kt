@@ -37,7 +37,7 @@ object ItemClickHandler {
      * Instance used for click handling on items
      */
     @JvmField
-    val INSTANCE = View.OnClickListener { onClick(it) }
+    val clickListener = View.OnClickListener { v -> onClick(v) }
 
     private fun onClick(v: View) {
         // Make sure that rogue clicks don't get through while allapps is launching, or after the

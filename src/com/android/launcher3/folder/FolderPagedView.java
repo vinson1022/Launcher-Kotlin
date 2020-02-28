@@ -235,7 +235,7 @@ public class FolderPagedView extends PagedView<PageIndicatorDots> {
                 R.layout.folder_application, null, false);
         textView.applyFromShortcutInfo(item);
         textView.setHapticFeedbackEnabled(false);
-        textView.setOnClickListener(ItemClickHandler.INSTANCE);
+        textView.setOnClickListener(ItemClickHandler.clickListener);
         textView.setOnLongClickListener(mFolder);
         textView.setOnFocusChangeListener(mFocusIndicatorHelper);
 

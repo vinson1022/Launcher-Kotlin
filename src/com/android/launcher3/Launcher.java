@@ -966,7 +966,7 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
         BubbleTextView favorite = (BubbleTextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.app_icon, parent, false);
         favorite.applyFromShortcutInfo(info);
-        favorite.setOnClickListener(ItemClickHandler.INSTANCE);
+        favorite.setOnClickListener(ItemClickHandler.clickListener);
         favorite.setOnFocusChangeListener(mFocusHandler);
         return favorite;
     }
