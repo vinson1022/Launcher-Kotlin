@@ -29,18 +29,18 @@ public class AllAppsSwipeController extends AbstractStateChangeTouchController {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             mTouchDownEvent = ev;
         }
-        if (mCurrentAnimation != null) {
+        if (currentAnimation != null) {
             // If we are already animating from a previous state, we can intercept.
             return true;
         }
-        if (AbstractFloatingView.getTopOpenView(mLauncher) != null) {
+        if (AbstractFloatingView.getTopOpenView(getLauncher()) != null) {
             return false;
         }
-        if (!mLauncher.isInState(NORMAL) && !mLauncher.isInState(ALL_APPS)) {
+        if (!getLauncher().isInState(NORMAL) && !getLauncher().isInState(ALL_APPS)) {
             // Don't listen for the swipe gesture if we are already in some other state.
             return false;
         }
-        if (mLauncher.isInState(ALL_APPS) && !mLauncher.getAppsView().shouldContainerScroll(ev)) {
+        if (getLauncher().isInState(ALL_APPS) && !getLauncher().getAppsView().shouldContainerScroll(ev)) {
             return false;
         }
         return true;
@@ -58,7 +58,7 @@ public class AllAppsSwipeController extends AbstractStateChangeTouchController {
 
     @Override
     protected int getLogContainerTypeForNormalState() {
-        return mLauncher.getDragLayer().isEventOverView(mLauncher.getHotseat(), mTouchDownEvent) ?
+        return getLauncher().getDragLayer().isEventOverView(getLauncher().getHotseat(), mTouchDownEvent) ?
                 ContainerType.HOTSEAT : ContainerType.WORKSPACE;
     }
 
@@ -66,10 +66,10 @@ public class AllAppsSwipeController extends AbstractStateChangeTouchController {
     protected float initCurrentAnimation(@AnimationComponents int animComponents) {
         float range = getShiftRange();
         long maxAccuracy = (long) (2 * range);
-        mCurrentAnimation = mLauncher.getStateManager()
-                .createAnimationToNewWorkspace(mToState, maxAccuracy, animComponents);
-        float startVerticalShift = mFromState.getVerticalProgress(mLauncher) * range;
-        float endVerticalShift = mToState.getVerticalProgress(mLauncher) * range;
+        currentAnimation = getLauncher().getStateManager()
+                .createAnimationToNewWorkspace(toState, maxAccuracy, animComponents);
+        float startVerticalShift = fromState.getVerticalProgress(getLauncher()) * range;
+        float endVerticalShift = toState.getVerticalProgress(getLauncher()) * range;
         float totalShift = endVerticalShift - startVerticalShift;
         return 1 / totalShift;
     }

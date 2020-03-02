@@ -21,10 +21,10 @@ interface TouchController {
     /**
      * Called when the draglayer receives touch event.
      */
-    fun onControllerTouchEvent(ev: MotionEvent?): Boolean
+    fun onControllerTouchEvent(ev: MotionEvent): Boolean
 
     /**
      * Called when the draglayer receives a intercept touch event.
      */
-    fun onControllerInterceptTouchEvent(ev: MotionEvent?): Boolean
+    fun onControllerInterceptTouchEvent(ev: MotionEvent): Boolean
 }
