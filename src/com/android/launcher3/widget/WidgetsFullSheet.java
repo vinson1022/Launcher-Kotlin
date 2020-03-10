@@ -67,13 +67,13 @@ public class WidgetsFullSheet extends BaseWidgetSheet
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mContent = findViewById(R.id.container);
+        content = findViewById(R.id.container);
 
         mRecyclerView = findViewById(R.id.widgets_list_view);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setApplyBitmapDeferred(true, mRecyclerView);
 
-        TopRoundedCornerView springLayout = (TopRoundedCornerView) mContent;
+        TopRoundedCornerView springLayout = (TopRoundedCornerView) content;
         springLayout.addSpringView(R.id.widgets_list_view);
         mRecyclerView.setEdgeEffectFactory(springLayout.createEdgeEffectFactory());
         onWidgetsBound();
@@ -88,14 +88,14 @@ public class WidgetsFullSheet extends BaseWidgetSheet
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mLauncher.getAppWidgetHost().addProviderChangeListener(this);
+        launcher.getAppWidgetHost().addProviderChangeListener(this);
         notifyWidgetProvidersChanged();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mLauncher.getAppWidgetHost().removeProviderChangeListener(this);
+        launcher.getAppWidgetHost().removeProviderChangeListener(this);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class WidgetsFullSheet extends BaseWidgetSheet
             clearNavBarColor();
         }
 
-        ((TopRoundedCornerView) mContent).setNavBarScrimHeight(mInsets.bottom);
+        ((TopRoundedCornerView) content).setNavBarScrimHeight(mInsets.bottom);
         requestLayout();
     }
 
@@ -121,13 +121,13 @@ public class WidgetsFullSheet extends BaseWidgetSheet
         if (mInsets.bottom > 0) {
             widthUsed = 0;
         } else {
-            Rect padding = mLauncher.getDeviceProfile().workspacePadding;
+            Rect padding = launcher.getDeviceProfile().workspacePadding;
             widthUsed = Math.max(padding.left + padding.right,
                     2 * (mInsets.left + mInsets.right));
         }
 
-        int heightUsed = mInsets.top + mLauncher.getDeviceProfile().edgeMarginPx;
-        measureChildWithMargins(mContent, widthMeasureSpec,
+        int heightUsed = mInsets.top + launcher.getDeviceProfile().edgeMarginPx;
+        measureChildWithMargins(content, widthMeasureSpec,
                 widthUsed, heightMeasureSpec, heightUsed);
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.getSize(heightMeasureSpec));
@@ -139,48 +139,48 @@ public class WidgetsFullSheet extends BaseWidgetSheet
         int height = b - t;
 
         // Content is laid out as center bottom aligned
-        int contentWidth = mContent.getMeasuredWidth();
+        int contentWidth = content.getMeasuredWidth();
         int contentLeft = (width - contentWidth) / 2;
-        mContent.layout(contentLeft, height - mContent.getMeasuredHeight(),
+        content.layout(contentLeft, height - content.getMeasuredHeight(),
                 contentLeft + contentWidth, height);
 
-        setTranslationShift(mTranslationShift);
+        setTranslationShift(_translationShift);
     }
 
     @Override
     public void notifyWidgetProvidersChanged() {
-        mLauncher.refreshAndBindWidgetsForPackageUser(null);
+        launcher.refreshAndBindWidgetsForPackageUser(null);
     }
 
     @Override
     protected void onWidgetsBound() {
-        mAdapter.setWidgets(mLauncher.getPopupDataProvider().getAllWidgets());
+        mAdapter.setWidgets(launcher.getPopupDataProvider().getAllWidgets());
     }
 
     private void open(boolean animate) {
         if (animate) {
-            if (mLauncher.getDragLayer().getInsets().bottom > 0) {
-                mContent.setAlpha(0);
+            if (launcher.getDragLayer().getInsets().bottom > 0) {
+                content.setAlpha(0);
                 setTranslationShift(VERTICAL_START_POSITION);
             }
-            mOpenCloseAnimator.setValues(
+            openCloseAnimator.setValues(
                     PropertyValuesHolder.ofFloat(TRANSLATION_SHIFT, TRANSLATION_SHIFT_OPENED));
-            mOpenCloseAnimator
+            openCloseAnimator
                     .setDuration(DEFAULT_OPEN_DURATION)
                     .setInterpolator(AnimationUtils.loadInterpolator(
                             getContext(), android.R.interpolator.linear_out_slow_in));
-            mOpenCloseAnimator.addListener(new AnimatorListenerAdapter() {
+            openCloseAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mRecyclerView.setLayoutFrozen(false);
                     mAdapter.setApplyBitmapDeferred(false, mRecyclerView);
-                    mOpenCloseAnimator.removeListener(this);
+                    openCloseAnimator.removeListener(this);
                 }
             });
             post(() -> {
                 mRecyclerView.setLayoutFrozen(true);
-                mOpenCloseAnimator.start();
-                mContent.animate().alpha(1).setDuration(FADE_IN_DURATION);
+                openCloseAnimator.start();
+                content.animate().alpha(1).setDuration(FADE_IN_DURATION);
             });
         } else {
             setTranslationShift(TRANSLATION_SHIFT_OPENED);
@@ -203,13 +203,13 @@ public class WidgetsFullSheet extends BaseWidgetSheet
     public boolean onControllerInterceptTouchEvent(MotionEvent ev) {
         // Disable swipe down when recycler view is scrolling
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            mNoIntercept = false;
+            noIntercept = false;
             RecyclerViewFastScroller scroller = mRecyclerView.getScrollbar();
             if (scroller.getThumbOffsetY() >= 0 &&
-                    mLauncher.getDragLayer().isEventOverView(scroller, ev)) {
-                mNoIntercept = true;
-            } else if (mLauncher.getDragLayer().isEventOverView(mContent, ev)) {
-                mNoIntercept = !mRecyclerView.shouldContainerScroll(ev, mLauncher.getDragLayer());
+                    launcher.getDragLayer().isEventOverView(scroller, ev)) {
+                noIntercept = true;
+            } else if (launcher.getDragLayer().isEventOverView(content, ev)) {
+                noIntercept = !mRecyclerView.shouldContainerScroll(ev, launcher.getDragLayer());
             }
         }
         return super.onControllerInterceptTouchEvent(ev);

@@ -55,13 +55,13 @@ public class WidgetsBottomSheet extends BaseWidgetSheet implements Insettable {
         super(context, attrs, defStyleAttr);
         setWillNotDraw(false);
         mInsets = new Rect();
-        mContent = this;
+        content = this;
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        setTranslationShift(mTranslationShift);
+        setTranslationShift(_translationShift);
     }
 
     public void populateAndShow(ItemInfo itemInfo) {
@@ -71,14 +71,14 @@ public class WidgetsBottomSheet extends BaseWidgetSheet implements Insettable {
 
         onWidgetsBound();
 
-        mLauncher.getDragLayer().addView(this);
+        launcher.getDragLayer().addView(this);
         mIsOpen = false;
         animateOpen();
     }
 
     @Override
     protected void onWidgetsBound() {
-        List<WidgetItem> widgets = mLauncher.getPopupDataProvider().getWidgetsForPackageUser(
+        List<WidgetItem> widgets = launcher.getPopupDataProvider().getWidgetsForPackageUser(
                 new PackageUserKey(
                         mOriginalItemInfo.getTargetComponent().getPackageName(),
                         mOriginalItemInfo.user));
@@ -90,7 +90,7 @@ public class WidgetsBottomSheet extends BaseWidgetSheet implements Insettable {
 
         for (int i = 0; i < widgets.size(); i++) {
             WidgetCell widget = addItemCell(widgetCells);
-            widget.applyFromCellItem(widgets.get(i), LauncherAppState.getInstance(mLauncher)
+            widget.applyFromCellItem(widgets.get(i), LauncherAppState.getInstance(launcher)
                     .getWidgetCache());
             widget.ensurePreview();
             widget.setVisibility(View.VISIBLE);
@@ -131,15 +131,15 @@ public class WidgetsBottomSheet extends BaseWidgetSheet implements Insettable {
     }
 
     private void animateOpen() {
-        if (mIsOpen || mOpenCloseAnimator.isRunning()) {
+        if (mIsOpen || openCloseAnimator.isRunning()) {
             return;
         }
         mIsOpen = true;
         setupNavBarColor();
-        mOpenCloseAnimator.setValues(
+        openCloseAnimator.setValues(
                 PropertyValuesHolder.ofFloat(TRANSLATION_SHIFT, TRANSLATION_SHIFT_OPENED));
-        mOpenCloseAnimator.setInterpolator(Interpolators.FAST_OUT_SLOW_IN);
-        mOpenCloseAnimator.start();
+        openCloseAnimator.setInterpolator(Interpolators.FAST_OUT_SLOW_IN);
+        openCloseAnimator.start();
     }
 
     @Override

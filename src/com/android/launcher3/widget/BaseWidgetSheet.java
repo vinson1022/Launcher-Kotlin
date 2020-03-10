@@ -72,7 +72,7 @@ abstract class BaseWidgetSheet extends AbstractSlideInView
 
     @Override
     public final boolean onLongClick(View v) {
-        if (!ItemLongClickListener.canStartDrag(mLauncher)) return false;
+        if (!ItemLongClickListener.canStartDrag(launcher)) return false;
 
         if (v instanceof WidgetCell) {
             return beginDraggingWidget((WidgetCell) v);
@@ -82,7 +82,7 @@ abstract class BaseWidgetSheet extends AbstractSlideInView
 
     protected void setTranslationShift(float translationShift) {
         super.setTranslationShift(translationShift);
-        mColorScrim.setProgress(1 - mTranslationShift);
+        mColorScrim.setProgress(1 - translationShift);
     }
 
     private boolean beginDraggingWidget(WidgetCell v) {
@@ -96,7 +96,7 @@ abstract class BaseWidgetSheet extends AbstractSlideInView
         }
 
         int[] loc = new int[2];
-        mLauncher.getDragLayer().getLocationInDragLayer(image, loc);
+        launcher.getDragLayer().getLocationInDragLayer(image, loc);
 
         new PendingItemDragHelper(v).startDrag(
                 image.getBitmapBounds(), image.getBitmap().getWidth(), image.getWidth(),
@@ -119,13 +119,13 @@ abstract class BaseWidgetSheet extends AbstractSlideInView
     }
 
     protected void clearNavBarColor() {
-        mLauncher.getSystemUiController().updateUiState(
+        launcher.getSystemUiController().updateUiState(
                 SystemUiController.UI_STATE_WIDGET_BOTTOM_SHEET, 0);
     }
 
     protected void setupNavBarColor() {
-        boolean isSheetDark = Themes.getAttrBoolean(mLauncher, R.attr.isMainColorDark);
-        mLauncher.getSystemUiController().updateUiState(
+        boolean isSheetDark = Themes.getAttrBoolean(launcher, R.attr.isMainColorDark);
+        launcher.getSystemUiController().updateUiState(
                 SystemUiController.UI_STATE_WIDGET_BOTTOM_SHEET,
                 isSheetDark ? SystemUiController.FLAG_DARK_NAV : SystemUiController.FLAG_LIGHT_NAV);
     }
@@ -140,7 +140,7 @@ abstract class BaseWidgetSheet extends AbstractSlideInView
     public final void logActionCommand(int command) {
         Target target = newContainerTarget(ContainerType.WIDGETS);
         target.cardinality = getElementsRowCount();
-        mLauncher.getUserEventDispatcher().logActionCommand(command, target);
+        launcher.getUserEventDispatcher().logActionCommand(command, target);
     }
 
     protected abstract int getElementsRowCount();
