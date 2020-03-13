@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.android.launcher3.accessibility.DragViewStateAnnouncer;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.util.FocusLogic;
+import com.android.launcher3.views.BaseDragLayerLayoutParams;
 import com.android.launcher3.widget.LauncherAppWidgetHostView;
 
 public class AppWidgetResizeFrame extends AbstractFloatingView implements View.OnKeyListener {
@@ -121,7 +122,7 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
         AppWidgetResizeFrame frame = (AppWidgetResizeFrame) launcher.getLayoutInflater()
                 .inflate(R.layout.app_widget_resize_frame, dl, false);
         frame.setupForWidget(widget, cellLayout, dl);
-        ((DragLayer.LayoutParams) frame.getLayoutParams()).customPosition = true;
+        ((BaseDragLayerLayoutParams) frame.getLayoutParams()).customPosition = true;
 
         dl.addView(frame);
         frame.mIsOpen = true;
@@ -207,7 +208,7 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
         mDeltaX = mDeltaXRange.clamp(deltaX);
         mDeltaY = mDeltaYRange.clamp(deltaY);
 
-        DragLayer.LayoutParams lp = (DragLayer.LayoutParams) getLayoutParams();
+        BaseDragLayerLayoutParams lp = (BaseDragLayerLayoutParams) getLayoutParams();
         mDeltaX = mDeltaXRange.clamp(deltaX);
         mBaselineX.applyDelta(mLeftBorderActive, mRightBorderActive, mDeltaX, mTempRange1);
         lp.x = mTempRange1.start;
@@ -422,7 +423,7 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
             mBottomTouchRegionAdjustment = 0;
         }
 
-        final DragLayer.LayoutParams lp = (DragLayer.LayoutParams) getLayoutParams();
+        final BaseDragLayerLayoutParams lp = (BaseDragLayerLayoutParams) getLayoutParams();
         if (!animate) {
             lp.width = newWidth;
             lp.height = newHeight;

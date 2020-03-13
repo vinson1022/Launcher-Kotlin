@@ -112,7 +112,7 @@ public class DragLayer extends BaseDragLayer<Launcher> {
     }
 
     public void recreateControllers() {
-        mControllers = UiFactory.createTouchControllers(mActivity);
+        controllers = UiFactory.createTouchControllers(activity);
     }
 
     public ViewGroupFocusHelper getFocusIndicatorHelper() {
@@ -135,24 +135,24 @@ public class DragLayer extends BaseDragLayer<Launcher> {
 
     @Override
     protected boolean findActiveController(MotionEvent ev) {
-        if (mActivity.getStateManager().getState().disableInteraction) {
+        if (activity.getStateManager().getState().disableInteraction) {
             // You Shall Not Pass!!!
-            mActiveController = null;
+            activeController = null;
             return true;
         }
         return super.findActiveController(ev);
     }
 
     private boolean isEventOverAccessibleDropTargetBar(MotionEvent ev) {
-        return isInAccessibleDrag() && isEventOverView(mActivity.getDropTargetBar(), ev);
+        return isInAccessibleDrag() && isEventOverView(activity.getDropTargetBar(), ev);
     }
 
     @Override
     public boolean onInterceptHoverEvent(MotionEvent ev) {
-        if (mActivity == null || mActivity.getWorkspace() == null) {
+        if (activity == null || activity.getWorkspace() == null) {
             return false;
         }
-        AbstractFloatingView topView = AbstractFloatingView.getTopOpenView(mActivity);
+        AbstractFloatingView topView = AbstractFloatingView.getTopOpenView(activity);
         if (!(topView instanceof Folder)) {
             return false;
         } else {
@@ -205,7 +205,7 @@ public class DragLayer extends BaseDragLayer<Launcher> {
 
 
     private boolean isInAccessibleDrag() {
-        return mActivity.getAccessibilityDelegate().isInAccessibleDrag();
+        return activity.getAccessibilityDelegate().isInAccessibleDrag();
     }
 
     @Override
@@ -218,12 +218,12 @@ public class DragLayer extends BaseDragLayer<Launcher> {
 
     @Override
     public void addChildrenForAccessibility(ArrayList<View> childrenForAccessibility) {
-        View topView = AbstractFloatingView.getTopOpenViewWithType(mActivity,
+        View topView = AbstractFloatingView.getTopOpenViewWithType(activity,
                 AbstractFloatingView.TYPE_ACCESSIBLE);
         if (topView != null) {
             addAccessibleChildToList(topView, childrenForAccessibility);
             if (isInAccessibleDrag()) {
-                addAccessibleChildToList(mActivity.getDropTargetBar(), childrenForAccessibility);
+                addAccessibleChildToList(activity.getDropTargetBar(), childrenForAccessibility);
             }
         } else {
             super.addChildrenForAccessibility(childrenForAccessibility);
@@ -486,14 +486,14 @@ public class DragLayer extends BaseDragLayer<Launcher> {
     public void onViewAdded(View child) {
         super.onViewAdded(child);
         updateChildIndices();
-        UiFactory.onLauncherStateOrFocusChanged(mActivity);
+        UiFactory.onLauncherStateOrFocusChanged(activity);
     }
 
     @Override
     public void onViewRemoved(View child) {
         super.onViewRemoved(child);
         updateChildIndices();
-        UiFactory.onLauncherStateOrFocusChanged(mActivity);
+        UiFactory.onLauncherStateOrFocusChanged(activity);
     }
 
     @Override

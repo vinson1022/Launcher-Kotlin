@@ -58,13 +58,13 @@ import com.android.launcher3.anim.Interpolators;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.ShortcutConfigActivityInfo;
 import com.android.launcher3.config.FeatureFlags;
-import com.android.launcher3.graphics.IconNormalizer;
 import com.android.launcher3.graphics.LauncherIcons;
 import com.android.launcher3.shortcuts.DeepShortcutManager;
 import com.android.launcher3.shortcuts.ShortcutInfoCompat;
 import com.android.launcher3.shortcuts.ShortcutKey;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.Thunk;
+import com.android.launcher3.views.BaseDragLayerLayoutParams;
 import com.android.launcher3.widget.PendingAddShortcutInfo;
 
 import java.util.Arrays;
@@ -557,7 +557,7 @@ public class DragView extends View {
         mDragLayer.addView(this);
 
         // Start the pick-up animation
-        DragLayer.LayoutParams lp = new DragLayer.LayoutParams(0, 0);
+        BaseDragLayerLayoutParams lp = new BaseDragLayerLayoutParams(0, 0);
         lp.width = mBitmap.getWidth();
         lp.height = mBitmap.getHeight();
         lp.customPosition = true;

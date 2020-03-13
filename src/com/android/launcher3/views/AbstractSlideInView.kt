@@ -42,16 +42,35 @@ abstract class AbstractSlideInView(
         defStyleAttr: Int
 ) : AbstractFloatingView(context, attrs, defStyleAttr), SwipeDetector.Listener {
 
+    @JvmField
     protected val launcher: Launcher = Launcher.getLauncher(context)
     protected val swipeDetector = SwipeDetector(context!!, this, SwipeDetector.VERTICAL)
 
+    @JvmField
     protected val openCloseAnimator: ObjectAnimator = LauncherAnimUtils.ofPropertyValuesHolder(this)
 
     protected lateinit var content: View
     private var scrollInterpolator: Interpolator = Interpolators.SCROLL_CUBIC
 
+    @JvmField
+    protected var TRANSLATION_SHIFT =
+            object : Property<AbstractSlideInView, Float>(Float::class.java, "translationShift") {
+                override fun get(view: AbstractSlideInView): Float {
+                    return view._translationShift
+                }
+
+                override fun set(view: AbstractSlideInView, value: Float) {
+                    view.setTranslationShift(value)
+                }
+            }
+    private val TRANSLATION_SHIFT_CLOSED = 1f
+    @JvmField
+    protected val TRANSLATION_SHIFT_OPENED = 0f
+
     // range [0, 1], 0=> completely open, 1=> completely closed
+    @JvmField
     protected var _translationShift = TRANSLATION_SHIFT_CLOSED
+    @JvmField
     protected var noIntercept = false
 
     init {
@@ -143,21 +162,5 @@ abstract class AbstractSlideInView(
     protected open fun onCloseComplete() {
         mIsOpen = false
         launcher.dragLayer.removeView(this)
-    }
-
-    companion object {
-        @JvmField
-        protected var TRANSLATION_SHIFT =
-                object : Property<AbstractSlideInView, Float>(Float::class.java, "translationShift") {
-                    override fun get(view: AbstractSlideInView): Float {
-                        return view._translationShift
-                    }
-
-                    override fun set(view: AbstractSlideInView, value: Float) {
-                        view.setTranslationShift(value)
-                    }
-                }
-        protected const val TRANSLATION_SHIFT_CLOSED = 1f
-        protected const val TRANSLATION_SHIFT_OPENED = 0f
     }
 }

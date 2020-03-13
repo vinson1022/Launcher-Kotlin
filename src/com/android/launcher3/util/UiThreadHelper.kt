@@ -26,7 +26,7 @@ import android.view.inputmethod.InputMethodManager
 /**
  * Utility class for offloading some class from UI thread
  */
-private val handlerThread: HandlerThread by lazy {
+private val handlerThread by lazy {
     HandlerThread("UiThreadHelper", THREAD_PRIORITY_FOREGROUND).also { it.start() }
 }
 private var handler: Handler? = null
@@ -34,13 +34,8 @@ private const val MSG_HIDE_KEYBOARD = 1
 
 val backgroundLooper: Looper = handlerThread.looper
 
-private fun getHandler(context: Context): Handler? {
-    if (handler == null) {
-        handler = Handler(backgroundLooper,
-                UiCallbacks(context.applicationContext))
-    }
-    return handler
-}
+private fun getHandler(context: Context) 
+        = handler ?: Handler(backgroundLooper, UiCallbacks(context.applicationContext)).also { handler = it }
 
 fun hideKeyboardAsync(context: Context, token: IBinder) {
     Message.obtain(getHandler(context), MSG_HIDE_KEYBOARD, token).sendToTarget()

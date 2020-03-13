@@ -18,6 +18,7 @@ import com.android.launcher3.dragndrop.DragController;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.dragndrop.DragOptions;
 import com.android.launcher3.util.Thunk;
+import com.android.launcher3.views.BaseDragLayerLayoutParams;
 
 public class WidgetHostViewLoader implements DragController.DragListener {
     private static final String TAG = "WidgetHostViewLoader";
@@ -132,7 +133,7 @@ public class WidgetHostViewLoader implements DragController.DragListener {
                 int[] unScaledSize = mLauncher.getWorkspace().estimateItemSize(mInfo);
                 // We want the first widget layout to be the correct size. This will be important
                 // for width size reporting to the AppWidgetManager.
-                DragLayer.LayoutParams lp = new DragLayer.LayoutParams(unScaledSize[0],
+                BaseDragLayerLayoutParams lp = new BaseDragLayerLayoutParams(unScaledSize[0],
                         unScaledSize[1]);
                 lp.x = lp.y = 0;
                 lp.customPosition = true;
