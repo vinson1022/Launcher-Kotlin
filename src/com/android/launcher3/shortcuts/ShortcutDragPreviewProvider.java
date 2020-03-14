@@ -40,10 +40,10 @@ public class ShortcutDragPreviewProvider extends DragPreviewProvider {
     }
 
     public Bitmap createDragBitmap() {
-        Drawable d = mView.getBackground();
+        Drawable d = view.getBackground();
         Rect bounds = getDrawableBounds(d);
 
-        int size = Launcher.getLauncher(mView.getContext()).getDeviceProfile().iconSizePx;
+        int size = Launcher.getLauncher(view.getContext()).getDeviceProfile().iconSizePx;
         final Bitmap b = Bitmap.createBitmap(
                 size + blurSizeOutline,
                 size + blurSizeOutline,
@@ -59,18 +59,18 @@ public class ShortcutDragPreviewProvider extends DragPreviewProvider {
 
     @Override
     public float getScaleAndPosition(Bitmap preview, int[] outPos) {
-        Launcher launcher = Launcher.getLauncher(mView.getContext());
-        int iconSize = getDrawableBounds(mView.getBackground()).width();
-        float scale = launcher.getDragLayer().getLocationInDragLayer(mView, outPos);
+        Launcher launcher = Launcher.getLauncher(view.getContext());
+        int iconSize = getDrawableBounds(view.getBackground()).width();
+        float scale = launcher.getDragLayer().getLocationInDragLayer(view, outPos);
 
-        int iconLeft = mView.getPaddingStart();
-        if (Utilities.isRtl(mView.getResources())) {
-            iconLeft = mView.getWidth() - iconSize - iconLeft;
+        int iconLeft = view.getPaddingStart();
+        if (Utilities.isRtl(view.getResources())) {
+            iconLeft = view.getWidth() - iconSize - iconLeft;
         }
 
         outPos[0] += Math.round(scale * iconLeft + (scale * iconSize - preview.getWidth()) / 2 +
                 mPositionShift.x);
-        outPos[1] += Math.round((scale * mView.getHeight() - preview.getHeight()) / 2
+        outPos[1] += Math.round((scale * view.getHeight() - preview.getHeight()) / 2
                 + mPositionShift.y);
         float size = launcher.getDeviceProfile().iconSizePx;
         return scale * iconSize / size;
