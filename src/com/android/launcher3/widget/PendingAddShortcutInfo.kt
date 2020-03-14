@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.launcher3.widget;
+package com.android.launcher3.widget
 
-import com.android.launcher3.PendingAddItemInfo;
-import com.android.launcher3.compat.ShortcutConfigActivityInfo;
+import com.android.launcher3.PendingAddItemInfo
+import com.android.launcher3.compat.ShortcutConfigActivityInfo
 
 /**
  * Meta data used for late binding of the short cuts.
  *
  * @see {@link PendingAddItemInfo}
  */
-public class PendingAddShortcutInfo extends PendingAddItemInfo {
+class PendingAddShortcutInfo(var activityInfo: ShortcutConfigActivityInfo) : PendingAddItemInfo() {
 
-    public ShortcutConfigActivityInfo activityInfo;
-
-    public PendingAddShortcutInfo(ShortcutConfigActivityInfo activityInfo) {
-        this.activityInfo = activityInfo;
-        componentName = activityInfo.getComponent();
-        user = activityInfo.getUser();
-        itemType = activityInfo.getItemType();
+    init {
+        componentName = activityInfo.component
+        user = activityInfo.user
+        itemType = activityInfo.itemType
     }
 }
