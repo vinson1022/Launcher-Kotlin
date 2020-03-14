@@ -112,7 +112,7 @@ public class PendingItemDragHelper extends DragPreviewProvider {
             dragRegion = null;
         } else {
             PendingAddShortcutInfo createShortcutInfo = (PendingAddShortcutInfo) mAddInfo;
-            Drawable icon = createShortcutInfo.activityInfo.getFullResIcon(app.getIconCache());
+            Drawable icon = createShortcutInfo.getActivityInfo().getFullResIcon(app.getIconCache());
             LauncherIcons li = LauncherIcons.obtain(launcher);
             preview = li.createScaledBitmapWithoutShadow(icon, 0);
             li.recycle();

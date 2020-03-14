@@ -94,7 +94,7 @@ open class LauncherAppWidgetHostView(context: Context?) : AppWidgetHostView(cont
         return inflater.inflate(R.layout.appwidget_error, this, false)
     }
 
-    override fun updateAppWidget(remoteViews: RemoteViews) {
+    override fun updateAppWidget(remoteViews: RemoteViews?) {
         super.updateAppWidget(remoteViews)
 
         // The provider info or the views might have changed.

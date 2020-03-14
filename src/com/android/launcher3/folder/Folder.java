@@ -1138,7 +1138,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
 
         PendingAddShortcutInfo pasi = d.dragInfo instanceof PendingAddShortcutInfo
                 ? (PendingAddShortcutInfo) d.dragInfo : null;
-        ShortcutInfo pasiSi = pasi != null ? pasi.activityInfo.createShortcutInfo() : null;
+        ShortcutInfo pasiSi = pasi != null ? pasi.getActivityInfo().createShortcutInfo() : null;
         if (pasi != null && pasiSi == null) {
             // There is no ShortcutInfo, so we have to go through a configuration activity.
             pasi.container = mInfo.id;

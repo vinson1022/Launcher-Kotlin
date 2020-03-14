@@ -330,7 +330,7 @@ public class DragView extends View {
         } else if (info.itemType == LauncherSettings.Favorites.ITEM_TYPE_DEEP_SHORTCUT) {
             if (info instanceof PendingAddShortcutInfo) {
                 ShortcutConfigActivityInfo activityInfo =
-                        ((PendingAddShortcutInfo) info).activityInfo;
+                        ((PendingAddShortcutInfo) info).getActivityInfo();
                 outObj[0] = activityInfo;
                 return activityInfo.getFullResIcon(appState.getIconCache());
             }

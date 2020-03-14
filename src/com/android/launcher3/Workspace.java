@@ -2521,7 +2521,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
     private void onDropExternal(final int[] touchXY, final CellLayout cellLayout, DragObject d) {
         if (d.dragInfo instanceof PendingAddShortcutInfo) {
             ShortcutInfo si = ((PendingAddShortcutInfo) d.dragInfo)
-                    .activityInfo.createShortcutInfo();
+                    .getActivityInfo().createShortcutInfo();
             if (si != null) {
                 d.dragInfo = si;
             }

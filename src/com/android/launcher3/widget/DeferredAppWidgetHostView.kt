@@ -42,7 +42,7 @@ class DeferredAppWidgetHostView(context: Context?) : LauncherAppWidgetHostView(c
         setBackgroundResource(R.drawable.bg_deferred_app_widget)
     }
 
-    override fun updateAppWidget(remoteViews: RemoteViews) {
+    override fun updateAppWidget(remoteViews: RemoteViews?) {
         // Not allowed
     }
 

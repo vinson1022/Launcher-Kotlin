@@ -1458,7 +1458,7 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
     private void processShortcutFromDrop(PendingAddShortcutInfo info) {
         Intent intent = new Intent(Intent.ACTION_CREATE_SHORTCUT).setComponent(info.componentName);
         setWaitingForResult(PendingRequestArgs.forIntent(REQUEST_CREATE_SHORTCUT, intent, info));
-        if (!info.activityInfo.startConfigActivity(this, REQUEST_CREATE_SHORTCUT)) {
+        if (!info.getActivityInfo().startConfigActivity(this, REQUEST_CREATE_SHORTCUT)) {
             handleActivityResult(REQUEST_CREATE_SHORTCUT, RESULT_CANCELED, null);
         }
     }
