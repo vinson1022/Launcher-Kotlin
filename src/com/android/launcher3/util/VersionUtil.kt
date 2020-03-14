@@ -7,3 +7,9 @@ inline fun aboveApi23(action: () -> Unit) {
         action()
     }
 }
+
+inline fun aboveApi26(action: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        action()
+    }
+}

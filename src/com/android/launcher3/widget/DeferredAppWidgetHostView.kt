@@ -32,7 +32,7 @@ class DeferredAppWidgetHostView(context: Context?) : LauncherAppWidgetHostView(c
     private val paint: TextPaint = TextPaint().apply {
         color = Color.WHITE
         textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
-                mLauncher.deviceProfile.fullScreenProfile.iconTextSizePx.toFloat(),
+                launcher.deviceProfile.fullScreenProfile.iconTextSizePx.toFloat(),
                 resources.displayMetrics)
     }
     private var setupTextLayout: Layout? = null
@@ -48,16 +48,15 @@ class DeferredAppWidgetHostView(context: Context?) : LauncherAppWidgetHostView(c
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val info = appWidgetInfo
-        if (info == null || info.label.isEmpty()) return
+        if (appWidgetInfo.label.isEmpty()) return
 
         // Use double padding so that there is extra space between background and text
         val availableWidth = measuredWidth - 2 * (paddingLeft + paddingRight)
-        if (setupTextLayout?.checkRefreshIfNeed(info.label, availableWidth) == true) {
-            setupTextLayout = getTextLayout(info.label, availableWidth)
+        if (setupTextLayout?.checkRefreshIfNeed(appWidgetInfo.label, availableWidth) == true) {
+            setupTextLayout = getTextLayout(appWidgetInfo.label, availableWidth)
         }
     }
-    
+
     private fun Layout.checkRefreshIfNeed(label: String, width: Int) = text == label && width == width
 
     private fun getTextLayout(label: String, width: Int)

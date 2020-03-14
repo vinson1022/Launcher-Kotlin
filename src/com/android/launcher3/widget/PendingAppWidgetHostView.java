@@ -74,7 +74,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
         mPaint = new TextPaint();
         mPaint.setColor(Themes.getAttrColor(getContext(), android.R.attr.textColorPrimary));
         mPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
-                mLauncher.getDeviceProfile().iconTextSizePx, getResources().getDisplayMetrics()));
+                launcher.getDeviceProfile().iconTextSizePx, getResources().getDisplayMetrics()));
         setBackgroundResource(R.drawable.pending_widget_bg);
         setWillNotDraw(false);
 
@@ -100,7 +100,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
     @Override
     protected View getDefaultView() {
         if (mDefaultView == null) {
-            mDefaultView = mInflater.inflate(R.layout.appwidget_not_ready, this, false);
+            mDefaultView = inflater.inflate(R.layout.appwidget_not_ready, this, false);
             mDefaultView.setOnClickListener(this);
             applyState();
         }
@@ -200,7 +200,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
     }
 
     private void updateDrawableBounds() {
-        DeviceProfile grid = mLauncher.getDeviceProfile();
+        DeviceProfile grid = launcher.getDeviceProfile();
         int paddingTop = getPaddingTop();
         int paddingBottom = getPaddingBottom();
         int paddingLeft = getPaddingLeft();
