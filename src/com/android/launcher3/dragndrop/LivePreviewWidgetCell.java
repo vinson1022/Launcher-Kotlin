@@ -38,9 +38,9 @@ public class LivePreviewWidgetCell extends WidgetCell {
 
     @Override
     public void ensurePreview() {
-        if (mPreview != null && mActiveRequest == null) {
+        if (mPreview != null && activeRequest == null) {
             Bitmap preview = generateFromRemoteViews(
-                    mActivity, mPreview, mItem.widgetInfo, mPresetPreviewSize, new int[1]);
+		            activity, mPreview, item.widgetInfo, presetPreviewSize, new int[1]);
             if (preview != null) {
                 applyPreview(preview);
                 return;

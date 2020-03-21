@@ -134,7 +134,7 @@ public class AddItemActivity extends BaseActivity implements OnLongClickListener
     @Override
     public boolean onLongClick(View view) {
         // Find the position of the preview relative to the touch location.
-        WidgetImageView img = mWidgetCell.getWidgetView();
+        WidgetImageView img = mWidgetCell.getWidgetPreview();
 
         // If the ImageView doesn't have a drawable yet, the widget preview hasn't been loaded and
         // we abort the drag.
@@ -190,7 +190,7 @@ public class AddItemActivity extends BaseActivity implements OnLongClickListener
         PinShortcutRequestActivityInfo shortcutInfo =
                 new PinShortcutRequestActivityInfo(mRequest, this);
         WidgetItem item = new WidgetItem(shortcutInfo);
-        mWidgetCell.getWidgetView().setTag(new PendingAddShortcutInfo(shortcutInfo));
+        mWidgetCell.getWidgetPreview().setTag(new PendingAddShortcutInfo(shortcutInfo));
         mWidgetCell.applyFromCellItem(item, mApp.getWidgetCache());
         mWidgetCell.ensurePreview();
     }
@@ -213,7 +213,7 @@ public class AddItemActivity extends BaseActivity implements OnLongClickListener
         mWidgetOptions = WidgetHostViewLoader.getDefaultOptionsForWidget(this, mPendingWidgetInfo);
 
         WidgetItem item = new WidgetItem(widgetInfo, getPackageManager(), mIdp);
-        mWidgetCell.getWidgetView().setTag(mPendingWidgetInfo);
+        mWidgetCell.getWidgetPreview().setTag(mPendingWidgetInfo);
         mWidgetCell.applyFromCellItem(item, mApp.getWidgetCache());
         mWidgetCell.ensurePreview();
         return true;
@@ -301,7 +301,7 @@ public class AddItemActivity extends BaseActivity implements OnLongClickListener
     private void logCommand(int command) {
         getUserEventDispatcher().dispatchUserEvent(newLauncherEvent(
                 newCommandAction(command),
-                newItemTarget(mWidgetCell.getWidgetView(), mInstantAppResolver),
+                newItemTarget(mWidgetCell.getWidgetPreview(), mInstantAppResolver),
                 newContainerTarget(ContainerType.PINITEM)), null);
     }
 }

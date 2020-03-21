@@ -28,7 +28,7 @@
 
         <!-- The name of the widget. -->
         <TextView
-            android:id="@+id/widget_name"
+            android:id="@+id/widgetName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,7 +44,7 @@
         <!-- The original dimensions of the widget (can't be the same text as above due to different
              style. -->
         <TextView
-            android:id="@+id/widget_dims"
+            android:id="@+id/widgetDims"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -58,7 +58,7 @@
     <!-- The image of the widget. This view does not support padding. Any placement adjustment
          should be done using margins. -->
     <com.android.launcher3.widget.WidgetImageView
-        android:id="@+id/widget_preview"
+        android:id="@+id/widgetPreview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

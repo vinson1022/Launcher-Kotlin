@@ -44,15 +44,15 @@ import com.android.launcher3.views.AbstractSlideInView
  */
 internal abstract class BaseWidgetSheet(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AbstractSlideInView(context, attrs, defStyleAttr), View.OnClickListener, OnLongClickListener, DragSource {
     /* Touch handling related member variables. */
-    private var mWidgetInstructionToast: Toast = Toast.makeText(context, Utilities.wrapForTts(
+    private var widgetInstructionToast = Toast.makeText(context, Utilities.wrapForTts(
             context.getText(R.string.long_press_widget_to_add),
             context.getString(R.string.long_accessible_way_to_add)), Toast.LENGTH_SHORT)
-    private val colorScrim: ColorScrim = ColorScrim.createExtractedColorScrim(this)
+    private val colorScrim = ColorScrim.createExtractedColorScrim(this)
 
     override fun onClick(v: View) {
         // Let the user know that they have to long press to add a widget
-        mWidgetInstructionToast.cancel()
-        mWidgetInstructionToast.show()
+        widgetInstructionToast.cancel()
+        widgetInstructionToast.show()
     }
 
     override fun onLongClick(v: View): Boolean {
@@ -67,8 +67,9 @@ internal abstract class BaseWidgetSheet(context: Context, attrs: AttributeSet?, 
         colorScrim.setProgress(1 - translationShift)
     }
 
-    private fun beginDraggingWidget(v: WidgetCell): Boolean { // Get the widget preview as the drag representation
-        val image = v.widgetView
+    private fun beginDraggingWidget(v: WidgetCell): Boolean {
+        // Get the widget preview as the drag representation
+        val image = v.getWidgetPreview()
         // If the ImageView doesn't have a drawable yet, the widget preview hasn't been loaded and
         // we abort the drag.
         if (image.bitmap == null) return false
