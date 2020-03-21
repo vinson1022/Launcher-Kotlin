@@ -114,7 +114,7 @@ public class WidgetsListAdapter extends Adapter<WidgetsRowViewHolder> {
     @Override
     public void onBindViewHolder(WidgetsRowViewHolder holder, int pos) {
         WidgetListRowEntry entry = mEntries.get(pos);
-        List<WidgetItem> infoList = entry.widgets;
+        List<WidgetItem> infoList = entry.getWidgets();
 
         ViewGroup row = holder.cellContainer;
         if (DEBUG) {
@@ -151,7 +151,7 @@ public class WidgetsListAdapter extends Adapter<WidgetsRowViewHolder> {
         }
 
         // Bind the views in the application info section.
-        holder.title.applyFromPackageItemInfo(entry.pkgItem);
+        holder.title.applyFromPackageItemInfo(entry.getPkgItem());
 
         // Bind the view in the widget horizontal tray region.
         for (int i=0; i < infoList.size(); i++) {
@@ -214,7 +214,7 @@ public class WidgetsListAdapter extends Adapter<WidgetsRowViewHolder> {
 
         @Override
         public int compare(WidgetListRowEntry a, WidgetListRowEntry b) {
-            return mComparator.compare(a.pkgItem.title.toString(), b.pkgItem.title.toString());
+            return mComparator.compare(a.getPkgItem().title.toString(), b.getPkgItem().title.toString());
         }
     }
 }

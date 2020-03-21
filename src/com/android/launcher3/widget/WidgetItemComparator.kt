@@ -13,45 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.launcher3.widget;
+package com.android.launcher3.widget
 
-import android.os.Process;
-import android.os.UserHandle;
-
-import com.android.launcher3.model.WidgetItem;
-
-import java.text.Collator;
-import java.util.Comparator;
+import android.os.Process
+import com.android.launcher3.model.WidgetItem
+import java.text.Collator
+import java.util.*
 
 /**
  * Comparator for sorting WidgetItem based on their user, title and size.
  */
-public class WidgetItemComparator implements Comparator<WidgetItem> {
+class WidgetItemComparator : Comparator<WidgetItem> {
 
-    private final UserHandle mMyUserHandle = Process.myUserHandle();
-    private final Collator mCollator = Collator.getInstance();
+    private val myUserHandle = Process.myUserHandle()
+    private val collator = Collator.getInstance()
 
-    @Override
-    public int compare(WidgetItem a, WidgetItem b) {
+    override fun compare(a: WidgetItem, b: WidgetItem): Int {
         // Independent of how the labels compare, if only one of the two widget info belongs to
         // work profile, put that one in the back.
-        boolean thisWorkProfile = !mMyUserHandle.equals(a.getUser());
-        boolean otherWorkProfile = !mMyUserHandle.equals(b.getUser());
-        if (thisWorkProfile ^ otherWorkProfile) {
-            return thisWorkProfile ? 1 : -1;
+        val thisWorkProfile = myUserHandle != a.user
+        val otherWorkProfile = myUserHandle != b.user
+        if (thisWorkProfile xor otherWorkProfile) {
+            return if (thisWorkProfile) 1 else -1
         }
-
-        int labelCompare = mCollator.compare(a.label, b.label);
+        val labelCompare = collator.compare(a.label, b.label)
         if (labelCompare != 0) {
-            return labelCompare;
+            return labelCompare
         }
 
         // If the label is same, put the smaller widget before the larger widget. If the area is
         // also same, put the widget with smaller height before.
-        int thisArea = a.spanX * a.spanY;
-        int otherArea = b.spanX * b.spanY;
-        return thisArea == otherArea
-                ? Integer.compare(a.spanY, b.spanY)
-                : Integer.compare(thisArea, otherArea);
+        val thisArea = a.spanX * a.spanY
+        val otherArea = b.spanX * b.spanY
+        return if (thisArea == otherArea) a.spanY.compareTo(b.spanY) else thisArea.compareTo(otherArea)
     }
 }

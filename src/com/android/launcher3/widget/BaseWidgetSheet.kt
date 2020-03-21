@@ -72,12 +72,12 @@ internal abstract class BaseWidgetSheet(context: Context, attrs: AttributeSet?, 
         val image = v.getWidgetPreview()
         // If the ImageView doesn't have a drawable yet, the widget preview hasn't been loaded and
         // we abort the drag.
-        if (image.bitmap == null) return false
+        val width = image.bitmap?.width?: return false
 
         val loc = IntArray(2)
         launcher.dragLayer.getLocationInDragLayer(image, loc)
         PendingItemDragHelper(v).startDrag(
-                image.bitmapBounds, image.bitmap.width, image.width,
+                image.bitmapBounds, width, image.width,
                 Point(loc[0], loc[1]), this, DragOptions())
         close(true)
         return true

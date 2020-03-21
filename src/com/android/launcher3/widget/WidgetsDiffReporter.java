@@ -101,8 +101,8 @@ public class WidgetsDiffReporter {
                 // same package name but,
                 // did the icon, title, etc, change?
                 // or did the widget size and desc, span, etc change?
-                if (!isSamePackageItemInfo(orgRowEntry.pkgItem, newRowEntry.pkgItem) ||
-                        !orgRowEntry.widgets.equals(newRowEntry.widgets)) {
+                if (!isSamePackageItemInfo(orgRowEntry.getPkgItem(), newRowEntry.getPkgItem()) ||
+                        !orgRowEntry.getWidgets().equals(newRowEntry.getWidgets())) {
                     index = currentEntries.indexOf(orgRowEntry);
                     currentEntries.set(index, newRowEntry);
                     mListener.notifyItemChanged(index);

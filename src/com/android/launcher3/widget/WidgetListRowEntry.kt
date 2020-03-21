@@ -13,36 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.launcher3.widget;
+package com.android.launcher3.widget
 
-import com.android.launcher3.ItemInfo;
-import com.android.launcher3.model.PackageItemInfo;
-import com.android.launcher3.model.WidgetItem;
-
-import java.util.ArrayList;
+import com.android.launcher3.model.PackageItemInfo
+import com.android.launcher3.model.WidgetItem
+import java.util.*
 
 /**
  * Holder class to store all the information related to a single row in the widget list
  */
-public class WidgetListRowEntry {
-
-    public final PackageItemInfo pkgItem;
-
-    public final ArrayList<WidgetItem> widgets;
+class WidgetListRowEntry(val pkgItem: PackageItemInfo, val widgets: ArrayList<WidgetItem>) {
 
     /**
-     * Character that is used as a section name for the {@link ItemInfo#title}.
+     * Character that is used as a section name for the [ItemInfo.title].
      * (e.g., "G" will be stored if title is "Google")
      */
-    public String titleSectionName;
-
-    public WidgetListRowEntry(PackageItemInfo pkgItem, ArrayList<WidgetItem> items) {
-        this.pkgItem = pkgItem;
-        this.widgets = items;
-    }
-
-    @Override
-    public String toString() {
-        return pkgItem.packageName + ":" + widgets.size();
-    }
+    @JvmField
+    var titleSectionName: String? = null
+    override fun toString() = "${pkgItem.packageName}:${widgets.size}"
 }

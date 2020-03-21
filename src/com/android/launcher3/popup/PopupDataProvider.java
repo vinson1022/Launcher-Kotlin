@@ -219,8 +219,8 @@ public class PopupDataProvider implements NotificationListener.NotificationsChan
 
     public List<WidgetItem> getWidgetsForPackageUser(PackageUserKey packageUserKey) {
         for (WidgetListRowEntry entry : mAllWidgets) {
-            if (entry.pkgItem.packageName.equals(packageUserKey.packageName)) {
-                ArrayList<WidgetItem> widgets = new ArrayList<>(entry.widgets);
+            if (entry.getPkgItem().packageName.equals(packageUserKey.packageName)) {
+                ArrayList<WidgetItem> widgets = new ArrayList<>(entry.getWidgets());
                 // Remove widgets not associated with the correct user.
                 Iterator<WidgetItem> iterator = widgets.iterator();
                 while (iterator.hasNext()) {
