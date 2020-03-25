@@ -42,7 +42,7 @@ import com.android.launcher3.views.AbstractSlideInView
 /**
  * Base class for various widgets popup
  */
-internal abstract class BaseWidgetSheet(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AbstractSlideInView(context, attrs, defStyleAttr), View.OnClickListener, OnLongClickListener, DragSource {
+abstract class BaseWidgetSheet(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AbstractSlideInView(context, attrs, defStyleAttr), View.OnClickListener, OnLongClickListener, DragSource {
     /* Touch handling related member variables. */
     private var widgetInstructionToast = Toast.makeText(context, Utilities.wrapForTts(
             context.getText(R.string.long_press_widget_to_add),
