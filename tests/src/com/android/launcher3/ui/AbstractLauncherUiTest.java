@@ -121,7 +121,7 @@ public abstract class AbstractLauncherUiTest {
         mDevice.wait(Until.findObject(
                 By.text(mTargetContext.getString(R.string.widget_button_text)
                         .toUpperCase(Locale.getDefault()))), DEFAULT_UI_TIMEOUT).click();
-        return findViewById(R.id.widgets_list_view);
+        return findViewById(R.id.widgetsListView);
     }
 
     /**

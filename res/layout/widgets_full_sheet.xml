@@ -28,7 +28,7 @@
         android:elevation="4dp">
 
         <com.android.launcher3.widget.WidgetsRecyclerView
-            android:id="@+id/widgets_list_view"
+            android:id="@+id/widgetsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false" />
