@@ -35,7 +35,7 @@ import com.android.launcher3.views.RecyclerViewFastScroller;
  */
 public abstract class BaseRecyclerView extends RecyclerView  {
 
-    protected RecyclerViewFastScroller mScrollbar;
+    protected RecyclerViewFastScroller scroller;
 
     public BaseRecyclerView(Context context) {
         this(context, null);
@@ -57,13 +57,13 @@ public abstract class BaseRecyclerView extends RecyclerView  {
 
     public void bindFastScrollbar() {
         ViewGroup parent = (ViewGroup) getParent().getParent();
-        mScrollbar = parent.findViewById(R.id.fast_scroller);
-        mScrollbar.setRecyclerView(this, parent.findViewById(R.id.fast_scroller_popup));
+        scroller = parent.findViewById(R.id.fast_scroller);
+        scroller.setRecyclerView(this, parent.findViewById(R.id.fast_scroller_popup));
         onUpdateScrollbar(0);
     }
 
     public RecyclerViewFastScroller getScrollbar() {
-        return mScrollbar;
+        return scroller;
     }
 
     public int getScrollBarTop() {
@@ -74,7 +74,7 @@ public abstract class BaseRecyclerView extends RecyclerView  {
      * Returns the height of the fast scroll bar
      */
     public int getScrollbarTrackHeight() {
-        return mScrollbar.getHeight() - getScrollBarTop() - getPaddingBottom();
+        return scroller.getHeight() - getScrollBarTop() - getPaddingBottom();
     }
 
     /**
@@ -88,7 +88,7 @@ public abstract class BaseRecyclerView extends RecyclerView  {
      *   AvailableScrollBarHeight = Total height of the visible view - thumb height
      */
     protected int getAvailableScrollBarHeight() {
-        int availableScrollBarHeight = getScrollbarTrackHeight() - mScrollbar.getThumbHeight();
+        int availableScrollBarHeight = getScrollbarTrackHeight() - scroller.getThumbHeight();
         return availableScrollBarHeight;
     }
 
@@ -103,7 +103,7 @@ public abstract class BaseRecyclerView extends RecyclerView  {
             int availableScrollHeight) {
         // Only show the scrollbar if there is height to be scrolled
         if (availableScrollHeight <= 0) {
-            mScrollbar.setThumbOffsetY(-1);
+            scroller.setThumbOffsetY(-1);
             return;
         }
 
@@ -114,7 +114,7 @@ public abstract class BaseRecyclerView extends RecyclerView  {
                 (int) (((float) scrollY / availableScrollHeight) * getAvailableScrollBarHeight());
 
         // Calculate the position and size of the scroll bar
-        mScrollbar.setThumbOffsetY(scrollBarY);
+        scroller.setThumbOffsetY(scrollBarY);
     }
 
     /**
@@ -125,18 +125,13 @@ public abstract class BaseRecyclerView extends RecyclerView  {
         int[] point = new int[2];
         point[0] = (int) ev.getX();
         point[1] = (int) ev.getY();
-        Utilities.mapCoordInSelfToDescendant(mScrollbar, eventSource, point);
+        Utilities.mapCoordInSelfToDescendant(scroller, eventSource, point);
         // IF the MotionEvent is inside the thumb, container should not be pulled down.
-        if (mScrollbar.shouldBlockIntercept(point[0], point[1])) {
-            return false;
-        }
+        if (scroller.shouldBlockIntercept(point[0], point[1])) return false;
 
         // IF scroller is at the very top OR there is no scroll bar because there is probably not
         // enough items to scroll, THEN it's okay for the container to be pulled down.
-        if (getCurrentScrollY() == 0) {
-            return true;
-        }
-        return false;
+        return getCurrentScrollY() == 0;
     }
 
     /**

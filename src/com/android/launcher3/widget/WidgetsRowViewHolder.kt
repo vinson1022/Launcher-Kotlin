@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.launcher3.widget;
+package com.android.launcher3.widget
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.ViewGroup;
+import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+import com.android.launcher3.BubbleTextView
+import com.android.launcher3.R
 
-import com.android.launcher3.BubbleTextView;
-import com.android.launcher3.R;
+class WidgetsRowViewHolder(v: ViewGroup) : RecyclerView.ViewHolder(v) {
+    val cellContainer: ViewGroup = v.findViewById(R.id.widgets_cell_list)
+    val title: BubbleTextView = v.findViewById(R.id.section)
 
-public class WidgetsRowViewHolder extends ViewHolder {
-
-    public final ViewGroup cellContainer;
-    public final BubbleTextView title;
-
-    public WidgetsRowViewHolder(ViewGroup v) {
-        super(v);
-
-        cellContainer = v.findViewById(R.id.widgets_cell_list);
-        title = v.findViewById(R.id.section);
-        title.setAccessibilityDelegate(null);
+    init {
+        title.accessibilityDelegate = null
     }
 }
