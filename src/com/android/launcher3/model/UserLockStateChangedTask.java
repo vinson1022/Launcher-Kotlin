@@ -61,7 +61,7 @@ public class UserLockStateChangedTask extends BaseModelUpdateTask {
         if (isUserUnlocked) {
             List<ShortcutInfoCompat> shortcuts =
                     deepShortcutManager.queryForPinnedShortcuts(null, mUser);
-            if (deepShortcutManager.wasLastCallSuccess()) {
+            if (deepShortcutManager.getWasLastCallSuccess()) {
                 for (ShortcutInfoCompat shortcut : shortcuts) {
                     pinnedShortcuts.put(ShortcutKey.fromInfo(shortcut), shortcut);
                 }

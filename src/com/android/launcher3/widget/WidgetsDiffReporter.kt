@@ -112,7 +112,7 @@ class WidgetsDiffReporter(private val iconCache: IconCache, private val listener
         } else if (curRow != null && newRow == null) {
             return -1 // old row needs to be deleted
         }
-        return comparator.compare(curRow, newRow)
+        return comparator.compare(curRow!!, newRow!!)
     }
 
     private fun isSamePackageItemInfo(curInfo: PackageItemInfo, newInfo: PackageItemInfo): Boolean {

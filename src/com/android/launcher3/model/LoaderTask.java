@@ -305,7 +305,7 @@ public class LoaderTask implements Runnable {
                     if (userUnlocked) {
                         List<ShortcutInfoCompat> pinnedShortcuts =
                                 mShortcutManager.queryForPinnedShortcuts(null, user);
-                        if (mShortcutManager.wasLastCallSuccess()) {
+                        if (mShortcutManager.getWasLastCallSuccess()) {
                             for (ShortcutInfoCompat shortcut : pinnedShortcuts) {
                                 shortcutKeyToPinnedShortcuts.put(ShortcutKey.fromInfo(shortcut),
                                         shortcut);
