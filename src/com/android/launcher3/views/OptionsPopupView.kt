@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.graphics.RectF
-import android.text.TextUtils
 import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.MotionEvent
