@@ -38,8 +38,10 @@ class DeepShortcutView
 ) : FrameLayout(context, attrs, defStyle) {
 
     private val pillRect = Rect()
-    val bubbleText: BubbleTextView = bubble_text
-    val iconView: View = icon
+    val bubbleText: BubbleTextView
+        get() = bubble_text
+    val iconView: View
+        get() = icon
     private var info: ShortcutInfo? = null
     private var detail: ShortcutInfoCompat? = null
     private val tempPoint = Point()

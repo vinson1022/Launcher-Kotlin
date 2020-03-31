@@ -34,7 +34,12 @@ import kotlin.math.roundToInt
 /**
  * A utility class to generate preview bitmap for dragging.
  */
-open class DragPreviewProvider @JvmOverloads constructor(protected val view: View, context: Context = view.context) {
+open class DragPreviewProvider
+@JvmOverloads
+constructor(
+        protected val view: View,
+        context: Context = view.context
+) {
     private val tempRect = Rect()
 
     @JvmField
@@ -136,14 +141,16 @@ open class DragPreviewProvider @JvmOverloads constructor(protected val view: Vie
         return scale
     }
 
-    protected open fun convertPreviewToAlphaBitmap(preview: Bitmap): Bitmap {
-        return preview.copy(Bitmap.Config.ALPHA_8, true)
-    }
+    protected open fun convertPreviewToAlphaBitmap(preview: Bitmap)
+            = preview.copy(Bitmap.Config.ALPHA_8, true)
 
-    private inner class OutlineGeneratorCallback internal constructor(private val mPreviewSnapshot: Bitmap) : Runnable {
+    private inner class OutlineGeneratorCallback
+    internal constructor(
+            private val previewSnapshot: Bitmap
+    ) : Runnable {
         private val context = view.context
         override fun run() {
-            val preview = convertPreviewToAlphaBitmap(mPreviewSnapshot)
+            val preview = convertPreviewToAlphaBitmap(previewSnapshot)
 
             // We start by removing most of the alpha channel so as to ignore shadows, and
             // other types of partial transparency when defining the shape of the object
@@ -208,17 +215,12 @@ open class DragPreviewProvider @JvmOverloads constructor(protected val view: Vie
 
     }
 
-    companion object {
-        @JvmStatic
-        protected fun getDrawableBounds(d: Drawable): Rect {
-            val bounds = Rect()
-            d.copyBounds(bounds)
-            if (bounds.width() == 0 || bounds.height() == 0) {
-                bounds[0, 0, d.intrinsicWidth] = d.intrinsicHeight
-            } else {
-                bounds.offsetTo(0, 0)
-            }
-            return bounds
+    protected fun getDrawableBounds(d: Drawable) = Rect().apply {
+        d.copyBounds(this)
+        if (width() == 0 || height() == 0) {
+            this[0, 0, d.intrinsicWidth] = d.intrinsicHeight
+        } else {
+            offsetTo(0, 0)
         }
     }
 }

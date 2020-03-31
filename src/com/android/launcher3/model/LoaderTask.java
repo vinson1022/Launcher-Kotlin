@@ -492,7 +492,7 @@ public class LoaderTask implements Runnable {
                                             true /* badged */, fallbackIconProvider).applyTo(info);
                                     li.recycle();
                                     if (pmHelper.isAppSuspended(
-                                            pinnedShortcut.getPackage(), info.user)) {
+                                            pinnedShortcut.getPackageName(), info.user)) {
                                         info.runtimeStatusFlags |= FLAG_DISABLED_SUSPENDED;
                                     }
                                     intent = info.intent;

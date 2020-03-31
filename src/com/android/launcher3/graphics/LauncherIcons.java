@@ -395,7 +395,7 @@ public class LauncherIcons implements AutoCloseable {
     public ItemInfoWithIcon getShortcutInfoBadge(ShortcutInfoCompat shortcutInfo, IconCache cache) {
         ComponentName cn = shortcutInfo.getActivity();
         String badgePkg = shortcutInfo.getBadgePackage(mContext);
-        boolean hasBadgePkgSet = !badgePkg.equals(shortcutInfo.getPackage());
+        boolean hasBadgePkgSet = !badgePkg.equals(shortcutInfo.getPackageName());
         if (cn != null && !hasBadgePkgSet) {
             // Get the app info for the source activity.
             AppInfo appInfo = new AppInfo();
