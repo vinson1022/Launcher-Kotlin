@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.launcher3.pageindicators;
+package com.android.launcher3.pageindicators
 
 /**
  * Base class for a page indicator.
  */
-public interface PageIndicator {
-
-    void setScroll(int currentScroll, int totalScroll);
-
-    void setActiveMarker(int activePage);
-
-    void setMarkersCount(int numMarkers);
+interface PageIndicator {
+    fun setScroll(currentScroll: Int, totalScroll: Int)
+    fun setActiveMarker(activePage: Int)
+    fun setMarkersCount(numMarkers: Int)
 }
