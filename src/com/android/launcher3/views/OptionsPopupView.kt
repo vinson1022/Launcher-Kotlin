@@ -30,6 +30,7 @@ import com.android.launcher3.popup.ArrowPopup
 import com.android.launcher3.shortcuts.DeepShortcutView
 import com.android.launcher3.userevent.nano.LauncherLogProto
 import com.android.launcher3.widget.WidgetsFullSheet
+import kotlinx.android.synthetic.main.system_shortcut.view.*
 import java.util.*
 
 /**
@@ -103,7 +104,7 @@ class OptionsPopupView
             for (item in items) {
                 val view = popup.inflateAndAdd<DeepShortcutView>(R.layout.system_shortcut, popup)
                 view.iconView.setBackgroundResource(item.iconRes)
-                view.bubbleText.setText(item.labelRes)
+                view.bubble_text.setText(item.labelRes)
                 view.setDividerVisibility(View.INVISIBLE)
                 view.setOnClickListener(popup)
                 view.setOnLongClickListener(popup)

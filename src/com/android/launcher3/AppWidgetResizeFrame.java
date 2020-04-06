@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -129,8 +130,14 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
         frame.snapToWidget(false);
     }
 
+    @Override
+    public void setLayoutParams(ViewGroup.LayoutParams params) {
+        super.setLayoutParams(params);
+        Log.d("Vinson", "setLayoutParams: " + params, new Exception());
+    }
+
     private void setupForWidget(LauncherAppWidgetHostView widgetView, CellLayout cellLayout,
-            DragLayer dragLayer) {
+                                DragLayer dragLayer) {
         mCellLayout = cellLayout;
         mWidgetView = widgetView;
         LauncherAppWidgetProviderInfo info = (LauncherAppWidgetProviderInfo)

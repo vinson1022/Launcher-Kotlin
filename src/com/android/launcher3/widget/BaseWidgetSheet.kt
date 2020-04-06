@@ -108,7 +108,7 @@ abstract class BaseWidgetSheet(context: Context, attrs: AttributeSet?, defStyleA
         }
     }
 
-    override fun fillInLogContainerData(v: View, info: ItemInfo, target: LauncherLogProto.Target, targetParent: LauncherLogProto.Target) {
+    override fun fillInLogContainerData(v: View?, info: ItemInfo, target: LauncherLogProto.Target, targetParent: LauncherLogProto.Target) {
         targetParent.containerType = WIDGETS
         targetParent.cardinality = elementsRowCount
     }

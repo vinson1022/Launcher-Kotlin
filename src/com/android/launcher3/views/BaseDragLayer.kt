@@ -232,16 +232,15 @@ abstract class BaseDragLayer<T : BaseDraggingActivity?>(
         fun onTouchComplete()
     }
 
-    override fun generateLayoutParams(attrs: AttributeSet) = LayoutParams(context, attrs)
+    override fun generateLayoutParams(attrs: AttributeSet) = BaseDragLayerLayoutParams(context, attrs)
 
-    override fun generateDefaultLayoutParams(): LayoutParams {
-        return LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
+    override fun generateDefaultLayoutParams()
+            = BaseDragLayerLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
     // Override to allow type-checking of LayoutParams.
     override fun checkLayoutParams(p: ViewGroup.LayoutParams) = p is LayoutParams
 
-    override fun generateLayoutParams(p: ViewGroup.LayoutParams) = LayoutParams(p)
+    override fun generateLayoutParams(p: ViewGroup.LayoutParams) = BaseDragLayerLayoutParams(p)
 
     fun getAlphaProperty(index: Int) = multiValueAlpha.getProperty(index)
 
@@ -251,7 +250,7 @@ abstract class BaseDragLayer<T : BaseDraggingActivity?>(
         for (i in 0 until count) {
             val child = getChildAt(i)
             val flp = child.layoutParams as FrameLayout.LayoutParams
-            if (flp is com.android.launcher3.views.BaseDragLayerLayoutParams) {
+            if (flp is BaseDragLayerLayoutParams) {
                 if (flp.customPosition) {
                     child.layout(flp.x, flp.y, flp.x + flp.width, flp.y + flp.height)
                 }
@@ -270,5 +269,5 @@ class BaseDragLayerLayoutParams : InsettableFrameLayout.LayoutParams {
 
     constructor(c: Context?, attrs: AttributeSet?) : super(c, attrs)
     constructor(width: Int, height: Int) : super(width, height)
-    constructor(lp: ViewGroup.LayoutParams?) : super(lp)
+    constructor(lp: ViewGroup.LayoutParams) : super(lp)
 }
