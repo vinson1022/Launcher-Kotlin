@@ -13,40 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.android.launcher3.notification;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.android.launcher3.notification
 
 /**
  * Contains data related to a group of notifications, like the group summary key and the child keys.
  */
-public class NotificationGroup {
-    private String mGroupSummaryKey;
-    private Set<String> mChildKeys;
+class NotificationGroup {
+    var groupSummaryKey: String? = null
+    private val childKeys = mutableSetOf<String>()
 
-    public NotificationGroup() {
-        mChildKeys = new HashSet<>();
+    fun addChildKey(childKey: String) {
+        childKeys.add(childKey)
     }
 
-    public void setGroupSummaryKey(String groupSummaryKey) {
-        mGroupSummaryKey = groupSummaryKey;
+    fun removeChildKey(childKey: String) {
+        childKeys.remove(childKey)
     }
 
-    public String getGroupSummaryKey() {
-        return mGroupSummaryKey;
-    }
-
-    public void addChildKey(String childKey) {
-        mChildKeys.add(childKey);
-    }
-
-    public void removeChildKey(String childKey) {
-        mChildKeys.remove(childKey);
-    }
-
-    public boolean isEmpty() {
-        return mChildKeys.isEmpty();
-    }
+    val isEmpty: Boolean
+        get() = childKeys.isEmpty()
 }
