@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent.*
 import android.content.IntentFilter
 import android.os.Looper
+import android.service.notification.NotificationListenerService
 import android.util.Log
 import com.android.launcher3.LauncherProvider.AUTHORITY
 import com.android.launcher3.SettingsActivity.NOTIFICATION_BADGING
@@ -77,7 +78,7 @@ class LauncherAppState private constructor(context: Context) {
             object : Secure(context.contentResolver) {
                 override fun onSettingChanged(isNotificationBadgingEnabled: Boolean) {
                     if (isNotificationBadgingEnabled) {
-                        NotificationListener.requestRebind(ComponentName(
+                        NotificationListenerService.requestRebind(ComponentName(
                                 this@LauncherAppState.context, NotificationListener::class.java))
                     }
                 }

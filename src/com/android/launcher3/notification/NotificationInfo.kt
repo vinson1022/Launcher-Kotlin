@@ -29,7 +29,6 @@ import com.android.launcher3.AbstractFloatingView
 import com.android.launcher3.Launcher
 import com.android.launcher3.LauncherAppState.Companion.getInstance
 import com.android.launcher3.graphics.IconPalette
-import com.android.launcher3.util.aboveApi26
 
 /**
  * An object that contains relevant information from a [StatusBarNotification]. This should

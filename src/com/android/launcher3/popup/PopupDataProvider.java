@@ -110,7 +110,7 @@ public class PopupDataProvider implements NotificationListener.NotificationsChan
     }
 
     @Override
-    public void onNotificationFullRefresh(List<StatusBarNotification> activeNotifications) {
+    public void onNotificationFullRefresh(List<? extends StatusBarNotification> activeNotifications) {
         if (activeNotifications == null) return;
         // This will contain the PackageUserKeys which have updated badges.
         HashMap<PackageUserKey, BadgeInfo> updatedBadges = new HashMap<>(mPackageUserToBadgeInfos);
