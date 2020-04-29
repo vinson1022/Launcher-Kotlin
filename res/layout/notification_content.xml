@@ -55,7 +55,7 @@
         android:focusable="true" >
 
         <LinearLayout
-            android:id="@+id/text_and_background"
+            android:id="@+id/textAndBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/popupColorPrimary"
@@ -87,7 +87,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/popup_item_icon"
+            android:id="@+id/popupItemIcon"
             android:layout_width="@dimen/notification_icon_size"
             android:layout_height="@dimen/notification_icon_size"
             android:layout_gravity="center_vertical|end"

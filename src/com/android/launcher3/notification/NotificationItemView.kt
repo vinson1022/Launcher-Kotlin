@@ -43,7 +43,7 @@ class NotificationItemView(private val container: PopupContainerWithArrow) {
     private val swipeDetector = SwipeDetector(context, mainView, SwipeDetector.HORIZONTAL).also {
         it.setDetectableScrollConditions(SwipeDetector.DIRECTION_BOTH, false)
     }
-    private val iconView = container.popup_item_icon
+    private val iconView = container.popupItemIcon
     private val header = container.header
     private val divider = container.divider
     private var gutter: View? = null
@@ -128,20 +128,20 @@ class NotificationItemView(private val container: PopupContainerWithArrow) {
         } else swipeDetector.onTouchEvent(ev!!)
     }
 
-    fun applyNotificationInfos(notificationInfos: List<NotificationInfo?>) {
+    fun applyNotificationInfos(notificationInfos: List<NotificationInfo>) {
         if (notificationInfos.isEmpty()) return
 
         val mainNotification = notificationInfos[0]
         mainView.applyNotificationInfo(mainNotification, false)
         for (i in 1 until notificationInfos.size) {
-            footer.addNotificationInfo(notificationInfos[i]!!)
+            footer.addNotificationInfo(notificationInfos[i])
         }
         footer.commitNotificationInfos()
     }
 
-    fun trimNotifications(notificationKeys: List<String?>) {
+    fun trimNotifications(notificationKeys: List<String>) {
         val dismissedMainNotification = !notificationKeys.contains(
-                mainView.notificationInfo.notificationKey)
+                mainView.notificationInfo?.notificationKey)
         if (dismissedMainNotification && !animatingNextIcon) {
             // Animate the next icon into place as the new main notification.
             animatingNextIcon = true
