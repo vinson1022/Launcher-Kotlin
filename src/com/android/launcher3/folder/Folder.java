@@ -483,7 +483,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
             openFolder.close(true);
         }
 
-        mIsOpen = true;
+        isOpen = true;
 
         DragLayer dragLayer = mLauncher.getDragLayer();
         // Just verify that the folder hasn't already been added to the DragLayer.
@@ -590,7 +590,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
 
     @Override
     protected void handleClose(boolean animate) {
-        mIsOpen = false;
+        isOpen = false;
 
         if (isEditingName()) {
             mFolderName.dispatchBackKey();
@@ -627,7 +627,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
 
     @Override
     protected Pair<View, String> getAccessibilityTarget() {
-        return Pair.create(mContent, mIsOpen ? mContent.getAccessibilityDescription()
+        return Pair.create(mContent, isOpen ? mContent.getAccessibilityDescription()
                 : getContext().getString(R.string.folder_closed));
     }
 
@@ -773,7 +773,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
     };
 
     public void completeDragExit() {
-        if (mIsOpen) {
+        if (isOpen) {
             close(true);
             mRearrangeOnClose = true;
         } else if (mState == STATE_ANIMATING) {
@@ -1252,7 +1252,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
             rearrangeChildren();
         }
         if (getItemCount() <= 1) {
-            if (mIsOpen) {
+            if (isOpen) {
                 close(true);
             } else {
                 replaceFolderWithFinalItem();

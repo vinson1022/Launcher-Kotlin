@@ -91,9 +91,9 @@ class BottomUserEducationView(
     }
 
     private fun open(animate: Boolean) {
-        if (mIsOpen || openCloseAnimator.isRunning) return
+        if (isOpen || openCloseAnimator.isRunning) return
 
-        mIsOpen = true
+        isOpen = true
         if (animate) {
             openCloseAnimator.setValues(
                     PropertyValuesHolder.ofFloat(TRANSLATION_SHIFT, TRANSLATION_SHIFT_OPENED))

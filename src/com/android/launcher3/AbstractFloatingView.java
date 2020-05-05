@@ -86,7 +86,7 @@ public abstract class AbstractFloatingView extends LinearLayout implements Touch
 
     public static final int TYPE_ACCESSIBLE = TYPE_ALL & ~TYPE_DISCOVERY_BOUNCE;
 
-    protected boolean mIsOpen;
+    protected boolean isOpen;
 
     public AbstractFloatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -107,12 +107,12 @@ public abstract class AbstractFloatingView extends LinearLayout implements Touch
 
     public final void close(boolean animate) {
         animate &= !Utilities.isPowerSaverPreventingAnimation(getContext());
-        if (mIsOpen) {
+        if (isOpen) {
             BaseActivity.fromContext(getContext()).getUserEventDispatcher()
                     .resetElapsedContainerMillis("container closed");
         }
         handleClose(animate);
-        mIsOpen = false;
+        isOpen = false;
     }
 
     protected abstract void handleClose(boolean animate);
@@ -120,7 +120,7 @@ public abstract class AbstractFloatingView extends LinearLayout implements Touch
     public abstract void logActionCommand(int command);
 
     public final boolean isOpen() {
-        return mIsOpen;
+        return isOpen;
     }
 
     protected void onWidgetsBound() {
@@ -148,7 +148,7 @@ public abstract class AbstractFloatingView extends LinearLayout implements Touch
         sendCustomAccessibilityEvent(
                 targetInfo.first, TYPE_WINDOW_STATE_CHANGED, targetInfo.second);
 
-        if (mIsOpen) {
+        if (isOpen) {
             sendAccessibilityEvent(TYPE_VIEW_FOCUSED);
         }
         BaseDraggingActivity.fromContext(getContext()).getDragLayer()

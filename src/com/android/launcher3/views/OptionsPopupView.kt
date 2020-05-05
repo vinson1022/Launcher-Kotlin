@@ -67,14 +67,14 @@ class OptionsPopupView
     }
 
     private fun logTap(action: Int, controlType: Int) {
-        mLauncher.userEventDispatcher.logActionOnControl(action, controlType)
+        launcher.userEventDispatcher.logActionOnControl(action, controlType)
     }
 
     override fun onControllerInterceptTouchEvent(ev: MotionEvent): Boolean {
         if (ev.action != MotionEvent.ACTION_DOWN) {
             return false
         }
-        if (mLauncher.dragLayer.isEventOverView(this, ev)) {
+        if (launcher.dragLayer.isEventOverView(this, ev)) {
             return false
         }
         close(true)

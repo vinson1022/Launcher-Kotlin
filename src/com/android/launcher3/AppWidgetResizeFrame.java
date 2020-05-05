@@ -126,7 +126,7 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
         ((BaseDragLayerLayoutParams) frame.getLayoutParams()).customPosition = true;
 
         dl.addView(frame);
-        frame.mIsOpen = true;
+        frame.isOpen = true;
         frame.snapToWidget(false);
     }
 

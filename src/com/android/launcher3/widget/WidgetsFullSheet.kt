@@ -64,7 +64,7 @@ class WidgetsFullSheet
 
     override fun getAccessibilityTarget(): Pair<View, String> {
         return Pair.create(widgetsListView, context.getString(
-                if (mIsOpen) R.string.widgets_list else R.string.widgets_list_closed))
+                if (isOpen) R.string.widgets_list else R.string.widgets_list_closed))
     }
 
     override fun onAttachedToWindow() {
@@ -192,7 +192,7 @@ class WidgetsFullSheet
         fun show(launcher: Launcher, animate: Boolean): WidgetsFullSheet {
             val sheet = launcher.layoutInflater
                     .inflate(R.layout.widgets_full_sheet, launcher.dragLayer, false) as WidgetsFullSheet
-            sheet.mIsOpen = true
+            sheet.isOpen = true
             launcher.dragLayer.addView(sheet)
             sheet.open(animate)
             return sheet

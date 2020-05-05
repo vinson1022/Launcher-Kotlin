@@ -98,7 +98,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
         super(context, attrs, defStyleAttr);
         mStartDragThreshold = getResources().getDimensionPixelSize(
                 R.dimen.deep_shortcuts_start_drag_threshold);
-        mAccessibilityDelegate = new ShortcutMenuAccessibilityDelegate(mLauncher);
+        mAccessibilityDelegate = new ShortcutMenuAccessibilityDelegate(launcher);
     }
 
     public PopupContainerWithArrow(Context context, AttributeSet attrs) {
@@ -142,16 +142,16 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
 
     @Override
     public void logActionCommand(int command) {
-        mLauncher.getUserEventDispatcher().logActionCommand(
+        launcher.getUserEventDispatcher().logActionCommand(
                 command, mOriginalIcon, ContainerType.DEEPSHORTCUTS);
     }
 
     @Override
     public boolean onControllerInterceptTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            DragLayer dl = mLauncher.getDragLayer();
+            DragLayer dl = launcher.getDragLayer();
             if (!dl.isEventOverView(this, ev)) {
-                mLauncher.getUserEventDispatcher().logActionTapOutside(
+                launcher.getUserEventDispatcher().logActionTapOutside(
                         LoggerUtils.newContainerTarget(ContainerType.DEEPSHORTCUTS));
                 close(true);
 
@@ -267,7 +267,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
             setAccessibilityPaneTitle(getTitleForAccessibility());
         }
 
-        mLauncher.getDragController().addDragListener(this);
+        launcher.getDragController().addDragListener(this);
         mOriginalIcon.forceHideBadge(true);
 
         // All views are added. Animate layout from now on.
@@ -276,7 +276,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
         // Load the shortcuts on a background thread and update the container as it animates.
         final Looper workerLooper = LauncherModel.getWorkerLooper();
         new Handler(workerLooper).postAtFrontOfQueue(PopupPopulator.createUpdateRunnable(
-                mLauncher, originalItemInfo, new Handler(Looper.getMainLooper()),
+                launcher, originalItemInfo, new Handler(Looper.getMainLooper()),
                 this, shortcutIds, mShortcuts, notificationKeys));
     }
 
@@ -293,7 +293,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
 
     @Override
     protected void getTargetObjectLocation(Rect outPos) {
-        mLauncher.getDragLayer().getDescendantRectRelativeToSelf(mOriginalIcon, outPos);
+        launcher.getDragLayer().getDescendantRectRelativeToSelf(mOriginalIcon, outPos);
         outPos.top += mOriginalIcon.getPaddingTop();
         outPos.left += mOriginalIcon.getPaddingLeft();
         outPos.right -= mOriginalIcon.getPaddingRight();
@@ -344,7 +344,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
     protected void onWidgetsBound() {
         ItemInfo itemInfo = (ItemInfo) mOriginalIcon.getTag();
         SystemShortcut widgetInfo = new SystemShortcut.Widgets();
-        View.OnClickListener onClickListener = widgetInfo.getOnClickListener(mLauncher, itemInfo);
+        View.OnClickListener onClickListener = widgetInfo.getOnClickListener(launcher, itemInfo);
         View widgetsView = null;
         int count = mSystemShortcutContainer.getChildCount();
         for (int i = 0; i < count; i++) {
@@ -393,7 +393,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
             shortcutIcon.setContentDescription(getContext().getText(info.labelResId));
         }
         view.setTag(info);
-        view.setOnClickListener(info.getOnClickListener(mLauncher,
+        view.setOnClickListener(info.getOnClickListener(launcher,
                 (ItemInfo) mOriginalIcon.getTag()));
     }
 
@@ -413,7 +413,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
 
             @Override
             public void onPreDragStart(DropTarget.DragObject dragObject) {
-                if (mIsAboveIcon) {
+                if (isAboveIcon) {
                     // Hide only the icon, keep the text visible.
                     mOriginalIcon.setIconVisible(false);
                     mOriginalIcon.setVisibility(VISIBLE);
@@ -430,8 +430,8 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
                     // Make sure we keep the original icon hidden while it is being dragged.
                     mOriginalIcon.setVisibility(INVISIBLE);
                 } else {
-                    mLauncher.getUserEventDispatcher().logDeepShortcutsOpen(mOriginalIcon);
-                    if (!mIsAboveIcon) {
+                    launcher.getUserEventDispatcher().logDeepShortcutsOpen(mOriginalIcon);
+                    if (!isAboveIcon) {
                         // Show the icon but keep the text hidden.
                         mOriginalIcon.setVisibility(VISIBLE);
                         mOriginalIcon.setTextVisibility(false);
@@ -454,7 +454,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
 
     private void updateNotificationHeader() {
         ItemInfoWithIcon itemInfo = (ItemInfoWithIcon) mOriginalIcon.getTag();
-        BadgeInfo badgeInfo = mLauncher.getBadgeInfoForItem(itemInfo);
+        BadgeInfo badgeInfo = launcher.getBadgeInfoForItem(itemInfo);
         if (mNotificationItemView != null && badgeInfo != null) {
             mNotificationItemView.updateHeader(
                     badgeInfo.getNotificationCount(), itemInfo.iconColor);
@@ -486,19 +486,19 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
     public void onDragStart(DropTarget.DragObject dragObject, DragOptions options) {
         // Either the original icon or one of the shortcuts was dragged.
         // Hide the container, but don't remove it yet because that interferes with touch events.
-        mDeferContainerRemoval = true;
+        deferContainerRemoval = true;
         animateClose();
     }
 
     @Override
     public void onDragEnd() {
-        if (!mIsOpen) {
-            if (mOpenCloseAnimator != null) {
+        if (!isOpen) {
+            if (openCloseAnimator != null) {
                 // Close animation is running.
-                mDeferContainerRemoval = false;
+                deferContainerRemoval = false;
             } else {
                 // Close animation is not running.
-                if (mDeferContainerRemoval) {
+                if (deferContainerRemoval) {
                     closeComplete();
                 }
             }
@@ -544,7 +544,7 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
 
     @Override
     public boolean onLongClick(View v) {
-        if (!ItemLongClickListener.canStartDrag(mLauncher)) return false;
+        if (!ItemLongClickListener.canStartDrag(launcher)) return false;
         // Return early if not the correct view
         if (!(v.getParent() instanceof DeepShortcutView)) return false;
 
@@ -555,15 +555,15 @@ public class PopupContainerWithArrow extends ArrowPopup implements DragSource,
         // Move the icon to align with the center-top of the touch point
         Point iconShift = new Point();
         iconShift.x = mIconLastTouchPos.x - sv.getIconCenter().x;
-        iconShift.y = mIconLastTouchPos.y - mLauncher.getDeviceProfile().iconSizePx;
+        iconShift.y = mIconLastTouchPos.y - launcher.getDeviceProfile().iconSizePx;
 
-        DragView dv = mLauncher.getWorkspace().beginDragShared(sv.getIconView(),
+        DragView dv = launcher.getWorkspace().beginDragShared(sv.getIconView(),
                 this, sv.getFinalInfo(),
                 new ShortcutDragPreviewProvider(sv.getIconView(), iconShift), new DragOptions());
         dv.animateShift(-iconShift.x, -iconShift.y);
 
         // TODO: support dragging from within folder without having to close it
-        AbstractFloatingView.closeOpenContainer(mLauncher, AbstractFloatingView.TYPE_FOLDER);
+        AbstractFloatingView.closeOpenContainer(launcher, AbstractFloatingView.TYPE_FOLDER);
         return false;
     }
 

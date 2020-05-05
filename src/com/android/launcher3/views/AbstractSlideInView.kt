@@ -135,13 +135,13 @@ abstract class AbstractSlideInView(
     }
 
     protected fun handleClose(animate: Boolean, defaultDuration: Long) {
-        if (mIsOpen && !animate) {
+        if (isOpen && !animate) {
             openCloseAnimator.cancel()
             setTranslationShift(TRANSLATION_SHIFT_CLOSED)
             onCloseComplete()
             return
         }
-        if (!mIsOpen || openCloseAnimator.isRunning) return
+        if (!isOpen || openCloseAnimator.isRunning) return
 
         openCloseAnimator.setValues(
                 PropertyValuesHolder.ofFloat(TRANSLATION_SHIFT, TRANSLATION_SHIFT_CLOSED))
@@ -160,7 +160,7 @@ abstract class AbstractSlideInView(
     }
 
     protected open fun onCloseComplete() {
-        mIsOpen = false
+        isOpen = false
         launcher.dragLayer.removeView(this)
     }
 }

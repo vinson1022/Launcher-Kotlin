@@ -94,8 +94,8 @@ public class DiscoveryBounce extends AbstractFloatingView {
 
     @Override
     protected void handleClose(boolean animate) {
-        if (mIsOpen) {
-            mIsOpen = false;
+        if (isOpen) {
+            isOpen = false;
             mLauncher.getDragLayer().removeView(this);
             // Reset the all-apps progress to what ever it was previously.
             mLauncher.getAllAppsController().setProgress(mLauncher.getStateManager()
@@ -114,7 +114,7 @@ public class DiscoveryBounce extends AbstractFloatingView {
     }
 
     private void show(int containerType) {
-        mIsOpen = true;
+        isOpen = true;
         mLauncher.getDragLayer().addView(this);
         mLauncher.getUserEventDispatcher().logActionBounceTip(containerType);
     }

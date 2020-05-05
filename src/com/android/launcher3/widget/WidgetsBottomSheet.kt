@@ -61,7 +61,7 @@ open class WidgetsBottomSheet @JvmOverloads constructor(
                 R.string.widgets_bottom_sheet_title, originalItemInfo!!.title)
         onWidgetsBound()
         launcher.dragLayer.addView(this)
-        mIsOpen = false
+        isOpen = false
         animateOpen()
     }
 
@@ -111,9 +111,9 @@ open class WidgetsBottomSheet @JvmOverloads constructor(
     }
 
     private fun animateOpen() {
-        if (mIsOpen || openCloseAnimator.isRunning) return
+        if (isOpen || openCloseAnimator.isRunning) return
 
-        mIsOpen = true
+        isOpen = true
         setupNavBarColor()
         openCloseAnimator.setValues(PropertyValuesHolder.ofFloat(TRANSLATION_SHIFT, TRANSLATION_SHIFT_OPENED))
         openCloseAnimator.interpolator = Interpolators.FAST_OUT_SLOW_IN
@@ -140,7 +140,7 @@ open class WidgetsBottomSheet @JvmOverloads constructor(
 
     override fun getAccessibilityTarget(): Pair<View, String> {
         return Pair.create(findViewById(R.id.title), context.getString(
-                if (mIsOpen) R.string.widgets_list else R.string.widgets_list_closed))
+                if (isOpen) R.string.widgets_list else R.string.widgets_list_closed))
     }
 
     companion object {
