@@ -142,7 +142,7 @@ public class PopupPopulator {
             List<ShortcutInfoCompat> shortcuts = DeepShortcutManager.getInstance(launcher)
                     .queryForShortcutsContainer(activity, shortcutIds, user);
             String shortcutIdToDeDupe = notificationKeys.isEmpty() ? null
-                    : notificationKeys.get(0).shortcutId;
+                    : notificationKeys.get(0).getShortcutId();
             shortcuts = PopupPopulator.sortAndFilterShortcuts(shortcuts, shortcutIdToDeDupe);
             for (int i = 0; i < shortcuts.size() && i < shortcutViews.size(); i++) {
                 final ShortcutInfoCompat shortcut = shortcuts.get(i);
