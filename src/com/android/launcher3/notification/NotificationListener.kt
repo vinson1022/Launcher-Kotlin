@@ -70,7 +70,7 @@ class NotificationListener : NotificationListenerService() {
                     onNotificationRemoved(pair.first, pair.second)
                 }
                 MSG_NOTIFICATION_FULL_REFRESH -> {
-                    onNotificationFullRefresh(message.obj as List<StatusBarNotification>)
+                    onNotificationFullRefresh(message.obj as? List<StatusBarNotification>)
                 }
             }
         }
@@ -284,7 +284,7 @@ class NotificationListener : NotificationListenerService() {
         fun onNotificationRemoved(removedPackageUserKey: PackageUserKey,
                                   notificationKey: NotificationKeyData)
 
-        fun onNotificationFullRefresh(activeNotifications: List<StatusBarNotification>)
+        fun onNotificationFullRefresh(activeNotifications: List<StatusBarNotification>?)
     }
 
     companion object {

@@ -2,7 +2,9 @@ package com.android.launcher3.popup
 
 import android.view.View
 import com.android.launcher3.*
-import com.android.launcher3.userevent.nano.LauncherLogProto
+import com.android.launcher3.userevent.nano.LauncherLogProto.Action.Touch.TAP
+import com.android.launcher3.userevent.nano.LauncherLogProto.ControlType.APPINFO_TARGET
+import com.android.launcher3.userevent.nano.LauncherLogProto.ControlType.WIDGETS_BUTTON
 import com.android.launcher3.util.InstantAppResolver.Companion.newInstance
 import com.android.launcher3.util.PackageManagerHelper
 import com.android.launcher3.util.PackageUserKey
@@ -14,28 +16,28 @@ import com.android.launcher3.widget.WidgetsBottomSheet
  *
  * Example system shortcuts, defined as inner classes, include Widgets and AppInfo.
  */
-abstract class SystemShortcut<T : BaseDraggingActivity>(val iconResId: Int, val labelResId: Int) : ItemInfo() {
+abstract class SystemShortcut(val iconResId: Int, val labelResId: Int) : ItemInfo() {
 
-    abstract fun getOnClickListener(activity: T, itemInfo: ItemInfo): View.OnClickListener?
+    abstract fun getOnClickListener(activity: BaseDraggingActivity, itemInfo: ItemInfo): View.OnClickListener?
 
-    class Widgets : SystemShortcut<Launcher>(R.drawable.ic_widget, R.string.widget_button_text) {
-        override fun getOnClickListener(activity: Launcher,
+    class Widgets : SystemShortcut(R.drawable.ic_widget, R.string.widget_button_text) {
+        override fun getOnClickListener(activity: BaseDraggingActivity,
                                         itemInfo: ItemInfo): View.OnClickListener? {
-            activity.popupDataProvider.getWidgetsForPackageUser(PackageUserKey(
+            val launcher = activity as? Launcher ?: return null
+            launcher.popupDataProvider.getWidgetsForPackageUser(PackageUserKey(
                     itemInfo.targetComponent.packageName, itemInfo.user))
                     ?: return null
             return View.OnClickListener { view: View? ->
-                AbstractFloatingView.closeAllOpenViews(activity)
-                val widgetsBottomSheet = activity.layoutInflater.inflate(
-                        R.layout.widgets_bottom_sheet, activity.dragLayer, false) as WidgetsBottomSheet
+                AbstractFloatingView.closeAllOpenViews(launcher)
+                val widgetsBottomSheet = launcher.layoutInflater.inflate(
+                        R.layout.widgets_bottom_sheet, launcher.dragLayer, false) as WidgetsBottomSheet
                 widgetsBottomSheet.populateAndShow(itemInfo)
-                activity.userEventDispatcher.logActionOnControl(LauncherLogProto.Action.Touch.TAP,
-                        LauncherLogProto.ControlType.WIDGETS_BUTTON, view)
+                launcher.userEventDispatcher.logActionOnControl(TAP, WIDGETS_BUTTON, view)
             }
         }
     }
 
-    class AppInfo : SystemShortcut<BaseDraggingActivity>(R.drawable.ic_info_no_shadow, R.string.app_info_drop_target_label) {
+    class AppInfo : SystemShortcut(R.drawable.ic_info_no_shadow, R.string.app_info_drop_target_label) {
         override fun getOnClickListener(
                 activity: BaseDraggingActivity, itemInfo: ItemInfo): View.OnClickListener? {
             return View.OnClickListener { view: View? ->
@@ -43,13 +45,12 @@ abstract class SystemShortcut<T : BaseDraggingActivity>(val iconResId: Int, val 
                 val opts = activity.getActivityLaunchOptionsAsBundle(view)
                 PackageManagerHelper(activity).startDetailsActivityForInfo(
                         itemInfo, sourceBounds, opts)
-                activity.userEventDispatcher.logActionOnControl(LauncherLogProto.Action.Touch.TAP,
-                        LauncherLogProto.ControlType.APPINFO_TARGET, view)
+                activity.userEventDispatcher.logActionOnControl(TAP, APPINFO_TARGET, view)
             }
         }
     }
 
-    class Install : SystemShortcut<BaseDraggingActivity>(R.drawable.ic_install_no_shadow, R.string.install_drop_target_label) {
+    class Install : SystemShortcut(R.drawable.ic_install_no_shadow, R.string.install_drop_target_label) {
         override fun getOnClickListener(
                 activity: BaseDraggingActivity, itemInfo: ItemInfo): View.OnClickListener? {
             val supportsWebUI = itemInfo is ShortcutInfo &&
@@ -74,5 +75,4 @@ abstract class SystemShortcut<T : BaseDraggingActivity>(val iconResId: Int, val 
             }
         }
     }
-
 }

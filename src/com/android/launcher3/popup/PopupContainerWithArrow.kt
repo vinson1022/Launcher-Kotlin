@@ -142,7 +142,7 @@ constructor(
 
     @TargetApi(Build.VERSION_CODES.P)
     private fun populateAndShow(originalIcon: BubbleTextView?, shortcutIds: List<String>,
-                                notificationKeys: List<NotificationKeyData>, systemShortcuts: List<SystemShortcut<BaseDraggingActivity>>) {
+                                notificationKeys: List<NotificationKeyData>, systemShortcuts: List<SystemShortcut>) {
         numNotifications = notificationKeys.size
         this.originalIcon = originalIcon
 
@@ -279,7 +279,7 @@ constructor(
         }
     }
 
-    private fun <R : BaseDraggingActivity, T : SystemShortcut<out R>> initializeSystemShortcut(resId: Int, container: ViewGroup?, info: T) {
+    private fun <T : SystemShortcut> initializeSystemShortcut(resId: Int, container: ViewGroup?, info: T) {
         val view = inflateAndAdd<View>(resId, container!!)
         if (view is DeepShortcutView) {
             // Expanded system shortcut, with both icon and text shown on white background.
@@ -290,7 +290,7 @@ constructor(
             view.setImageResource(info.iconResId)
             view.contentDescription = context.getText(info.labelResId)
         }
-        view.tag = info as SystemShortcut<BaseDraggingActivity>
+        view.tag = info
         view.setOnClickListener(info.getOnClickListener(launcher,
                 originalIcon!!.tag as ItemInfo))
     }
@@ -353,7 +353,7 @@ constructor(
         }
     }
 
-    fun trimNotifications(updatedBadges: Map<PackageUserKey?, BadgeInfo?>) {
+    fun trimNotifications(updatedBadges: Map<PackageUserKey, BadgeInfo>) {
         if (notificationItemView == null) return
 
         val originalInfo = originalIcon!!.tag as ItemInfo
