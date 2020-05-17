@@ -55,6 +55,7 @@ import com.android.launcher3.touch.ItemLongClickListener
 import com.android.launcher3.userevent.nano.LauncherLogProto
 import com.android.launcher3.util.PackageUserKey
 import com.android.launcher3.util.PackageUserKey.Companion.fromItemInfo
+import com.android.launcher3.util.aboveApi28
 import kotlin.math.hypot
 
 /**
@@ -160,7 +161,7 @@ constructor(
         systemShortcutContainer = this
         if (shortcutIds.isNotEmpty()) {
             notificationItemView?.addGutter()
-            for (i in shortcutIds.size downTo 1) {
+            for (i in 1..shortcutIds.size) {
                 shortcuts.add(inflateAndAdd(R.layout.deep_shortcut, this))
             }
             updateHiddenShortcuts()
@@ -173,15 +174,13 @@ constructor(
             }
         } else if (systemShortcuts.isNotEmpty()) {
             notificationItemView?.addGutter()
-            for (shortcut in systemShortcuts) {
-                initializeSystemShortcut(R.layout.system_shortcut, this, shortcut)
+            systemShortcuts.forEach {
+                initializeSystemShortcut(R.layout.system_shortcut, this, it)
             }
         }
         reorderAndShow(viewsToFlip)
         val originalItemInfo = originalIcon!!.tag as ItemInfo
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            accessibilityPaneTitle = titleForAccessibility
-        }
+        aboveApi28 { accessibilityPaneTitle = titleForAccessibility }
         launcher.dragController.addDragListener(this)
         this.originalIcon!!.forceHideBadge(true)
 

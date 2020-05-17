@@ -19,3 +19,9 @@ inline fun aboveApi26(action: () -> Unit) {
         action()
     }
 }
+
+inline fun aboveApi28(action: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        action()
+    }
+}
