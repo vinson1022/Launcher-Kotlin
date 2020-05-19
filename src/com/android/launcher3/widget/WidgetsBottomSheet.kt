@@ -66,10 +66,10 @@ open class WidgetsBottomSheet @JvmOverloads constructor(
     }
 
     override fun onWidgetsBound() {
-        val widgets = launcher.popupDataProvider.getWidgetsForPackageUser(
-                PackageUserKey(
-                        originalItemInfo!!.targetComponent.packageName,
-                        originalItemInfo!!.user))
+        val widgets = with(originalItemInfo!!) {
+            launcher.popupDataProvider.getWidgetsForPackageUser(PackageUserKey(targetComponent.packageName, user))
+        }
+        widgets ?: return
         val widgetRow = findViewById<ViewGroup>(R.id.widgets)
         val widgetCells = widgetRow.findViewById<ViewGroup>(R.id.widgets_cell_list)
         widgetCells.removeAllViews()

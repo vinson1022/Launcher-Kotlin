@@ -38,7 +38,7 @@ import java.util.*
  */
 class OptionsPopupView
 @JvmOverloads constructor(
-        context: Context?,
+        context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int = 0
 ) : ArrowPopup(context, attrs, defStyleAttr), View.OnClickListener, OnLongClickListener {
@@ -89,7 +89,7 @@ class OptionsPopupView
         return type and AbstractFloatingView.TYPE_OPTIONS_POPUP != 0
     }
 
-    override fun getTargetObjectLocation(outPos: Rect) {
+    override fun getTargetObjectLocation(outPos: Rect?) {
         targetRect.roundOut(outPos)
     }
 
