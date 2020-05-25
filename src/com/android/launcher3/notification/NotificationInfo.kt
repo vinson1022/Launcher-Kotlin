@@ -108,7 +108,7 @@ class NotificationInfo(context: Context, statusBarNotification: StatusBarNotific
         AbstractFloatingView.closeOpenContainer(launcher, AbstractFloatingView.TYPE_ACTION_POPUP)
     }
 
-    fun getIconForBackground(context: Context?, background: Int): Drawable? {
+    fun getIconForBackground(context: Context, background: Int): Drawable? {
         if (isIconLarge) {
             // Only small icons should be tinted.
             return iconDrawable

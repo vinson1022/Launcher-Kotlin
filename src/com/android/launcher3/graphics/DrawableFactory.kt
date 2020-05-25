@@ -86,6 +86,7 @@ class DrawableFactory {
     fun getBadgeForUser(user: UserHandle, context: Context): Drawable? {
         if (myUser == user) return null
 
+        val badgeBitmap = getUserBadge(user, context)
         return FastBitmapDrawable(getUserBadge(user, context)).apply {
             isFilterBitmap = true
             setBounds(0, 0, badgeBitmap.width, badgeBitmap.height)

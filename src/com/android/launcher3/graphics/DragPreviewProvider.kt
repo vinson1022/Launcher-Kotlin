@@ -113,10 +113,18 @@ constructor(
 
             // Use software renderer for widgets as we know that they already work
             return BitmapRenderer.createSoftwareBitmap(width + blurSizeOutline,
-                    height + blurSizeOutline) { c: Canvas -> drawDragView(c, scale) }
+                    height + blurSizeOutline, object : BitmapRenderer.Renderer {
+                override fun draw(out: Canvas) {
+                    drawDragView(out, scale)
+                }
+            })
         }
         return BitmapRenderer.createHardwareBitmap(width + blurSizeOutline,
-                height + blurSizeOutline) { c: Canvas -> drawDragView(c, 1f) }
+                height + blurSizeOutline, object : BitmapRenderer.Renderer {
+            override fun draw(out: Canvas) {
+                drawDragView(out, 1f)
+            }
+        })
     }
 
     fun generateDragOutline(preview: Bitmap) {

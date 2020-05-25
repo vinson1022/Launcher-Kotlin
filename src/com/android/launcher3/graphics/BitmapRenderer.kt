@@ -49,6 +49,6 @@ object BitmapRenderer {
      * Interface representing a bitmap draw operation.
      */
     interface Renderer {
-        fun draw(out: Canvas?)
+        fun draw(out: Canvas)
     }
 }
