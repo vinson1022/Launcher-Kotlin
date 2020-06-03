@@ -227,7 +227,7 @@ class PreloadIconDrawable(
                 `object`.setInternalProgress(value)
             }
         }
-        private const val PATH_SIZE = 100
+        const val PATH_SIZE = 100
         private const val PROGRESS_WIDTH = 7f
         private const val PROGRESS_GAP = 2f
         private const val MAX_PAINT_ALPHA = 255

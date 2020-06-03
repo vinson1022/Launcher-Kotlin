@@ -39,7 +39,7 @@ class DeepShortcutView
 
     private val pillRect = Rect()
     val bubbleText: BubbleTextView
-        get() = bubble_text
+        get() = findViewById(R.id.bubble_text)
     val iconView: View
         get() = icon
     private var info: ShortcutInfo? = null

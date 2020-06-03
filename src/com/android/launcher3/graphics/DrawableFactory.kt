@@ -30,7 +30,7 @@ import com.android.launcher3.ItemInfoWithIcon
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.allapps.AllAppsBackgroundDrawable
-import com.android.launcher3.graphics.PreloadIconDrawable.PATH_SIZE
+import com.android.launcher3.graphics.PreloadIconDrawable.Companion.PATH_SIZE
 import com.android.launcher3.util.aboveApi26
 
 /**
@@ -55,7 +55,7 @@ class DrawableFactory {
         if (preloadProgressPath == null) {
             preloadProgressPath = getPreloadProgressPath(context)
         }
-        return PreloadIconDrawable(info, preloadProgressPath, context)
+        return PreloadIconDrawable(info, preloadProgressPath!!, context)
     }
 
     private fun getPreloadProgressPath(context: Context): Path {

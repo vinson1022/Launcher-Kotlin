@@ -344,7 +344,7 @@ class LauncherIcons private constructor(context: Context) : AutoCloseable {
          * avoid allocating new objects in many cases.
          */
         @JvmStatic
-        fun obtain(context: Context): LauncherIcons? {
+        fun obtain(context: Context): LauncherIcons {
             synchronized(sPoolSync) {
                 if (sPool != null) {
                     val m = sPool
