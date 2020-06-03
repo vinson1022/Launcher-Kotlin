@@ -27,7 +27,7 @@ import com.android.launcher3.*
 import com.android.launcher3.LauncherAppState.Companion.getIDP
 import com.android.launcher3.graphics.BitmapInfo.Companion.fromBitmap
 import com.android.launcher3.graphics.BitmapRenderer.createHardwareBitmap
-import com.android.launcher3.graphics.ShadowGenerator.BLUR_FACTOR
+import com.android.launcher3.graphics.ShadowGenerator.Companion.BLUR_FACTOR
 import com.android.launcher3.model.PackageItemInfo
 import com.android.launcher3.shortcuts.DeepShortcutManager
 import com.android.launcher3.shortcuts.ShortcutInfoCompat
@@ -267,8 +267,7 @@ class LauncherIcons private constructor(context: Context) : AutoCloseable {
         val unbadgedDrawable = DeepShortcutManager.getInstance(mContext)
                 .getShortcutIconDrawable(shortcutInfo, fillResIconDpi)
         val cache = LauncherAppState.getInstance(mContext).iconCache
-        val unbadgedBitmap: Bitmap?
-        unbadgedBitmap = if (unbadgedDrawable != null) {
+        val unbadgedBitmap = if (unbadgedDrawable != null) {
             createScaledBitmapWithoutShadow(unbadgedDrawable, 0)
         } else {
             if (fallbackIconProvider != null) {
@@ -291,7 +290,7 @@ class LauncherIcons private constructor(context: Context) : AutoCloseable {
 
         result.icon = createHardwareBitmap(iconBitmapSize, iconBitmapSize, object : BitmapRenderer.Renderer {
             override fun draw(out: Canvas) {
-                shadowGenerator.recreateIcon(unbadgedBitmap, out)
+                shadowGenerator.recreateIcon(unbadgedBitmap!!, out)
                 badgeWithDrawable(out, FastBitmapDrawable(badge))
             }
         })
