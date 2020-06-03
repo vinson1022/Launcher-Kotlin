@@ -38,11 +38,11 @@ class ColorScrim(
 
     override fun onProgressChanged() {
         currentColor = ColorUtils.setAlphaComponent(color,
-                (interpolator.getInterpolation(mProgress) * Color.alpha(color)).roundToInt())
+                (interpolator.getInterpolation(_progress) * Color.alpha(color)).roundToInt())
     }
 
     override fun draw(canvas: Canvas, width: Int, height: Int) {
-        if (mProgress > 0) {
+        if (_progress > 0) {
             canvas.drawColor(currentColor)
         }
     }
