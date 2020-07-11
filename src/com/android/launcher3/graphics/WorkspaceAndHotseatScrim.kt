@@ -54,20 +54,18 @@ class WorkspaceAndHotseatScrim(private val root: View) : OnAttachStateChangeList
     }
     private val highlightRect = Rect()
     private val launcher: Launcher = Launcher.getLauncher(root.context)
-    private val wallpaperColorInfo = WallpaperColorInfo.getInstance(launcher).apply {
-        onExtractedColorsChanged(this)
-    }
+    private val bottomMaskPaint = Paint(Paint.FILTER_BITMAP_FLAG)
+    private val wallpaperColorInfo = WallpaperColorInfo.getInstance(launcher)
     private var workspace: Workspace? = null
     private val hasSysUiScrim: Boolean = !wallpaperColorInfo.supportsDarkText()
     private var drawTopScrim = false
     private var drawBottomScrim = false
     private val finalMaskRect = RectF()
-    private val bottomMaskPaint = Paint(Paint.FILTER_BITMAP_FLAG)
+    private val maskHeight = Utilities.pxFromDp(ALPHA_MASK_BITMAP_DP.toFloat(),
+            root.resources.displayMetrics)
     private var bottomMask: Bitmap? = if (hasSysUiScrim) {
         createDitheredAlphaMask()
     } else null
-    private val maskHeight = Utilities.pxFromDp(ALPHA_MASK_BITMAP_DP.toFloat(),
-            root.resources.displayMetrics)
     private var topScrim: Drawable? = if (hasSysUiScrim) {
         getAttrDrawable(root.context, R.attr.workspaceStatusBarScrim)
     } else null
@@ -81,6 +79,7 @@ class WorkspaceAndHotseatScrim(private val root: View) : OnAttachStateChangeList
 
     init {
         root.addOnAttachStateChangeListener(this)
+        onExtractedColorsChanged(wallpaperColorInfo)
     }
 
     fun setWorkspace(workspace: Workspace) {
