@@ -15,7 +15,6 @@
  */
 package com.android.launcher3.logging;
 
-import android.content.Context;
 import android.util.ArrayMap;
 import android.util.SparseArray;
 import android.view.View;
