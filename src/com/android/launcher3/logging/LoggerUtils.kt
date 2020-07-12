@@ -134,8 +134,9 @@ object LoggerUtils {
         return t
     }
 
-    fun newItemTarget(v: View, instantAppResolver: InstantAppResolver?): LauncherLogProto.Target {
-        return if (v.tag is ItemInfo) newItemTarget(v.tag as ItemInfo, instantAppResolver) else newTarget(ITEM)
+    @JvmStatic
+    fun newItemTarget(v: View?, instantAppResolver: InstantAppResolver?): LauncherLogProto.Target {
+        return if (v?.tag is ItemInfo) newItemTarget(v.tag as ItemInfo, instantAppResolver) else newTarget(ITEM)
     }
 
     @JvmStatic
