@@ -24,7 +24,7 @@ import com.android.launcher3.keyboard.FocusIndicatorHelper.SimpleFocusIndicatorH
 /**
  * [ItemDecoration] for drawing and animating focused view background.
  */
-class FocusedItemDecorator(container: View?) : ItemDecoration() {
+class FocusedItemDecorator(container: View) : ItemDecoration() {
     private val helper: FocusIndicatorHelper = SimpleFocusIndicatorHelper(container)
     val focusListener: View.OnFocusChangeListener
         get() = helper

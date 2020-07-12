@@ -392,7 +392,7 @@ constructor(
         }
     }
 
-    override fun fillInLogContainerData(v: View, info: ItemInfo, target: LauncherLogProto.Target, targetParent: LauncherLogProto.Target) {
+    override fun fillInLogContainerData(v: View?, info: ItemInfo, target: LauncherLogProto.Target, targetParent: LauncherLogProto.Target) {
         if (info === NotificationMainView.NOTIFICATION_ITEM_INFO) {
             target.itemType = LauncherLogProto.ItemType.NOTIFICATION
         } else {

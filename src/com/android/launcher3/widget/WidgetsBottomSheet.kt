@@ -37,10 +37,10 @@ import kotlinx.android.synthetic.main.widgets_bottom_sheet.view.*
  * Bottom sheet for the "Widgets" system shortcut in the long-press popup.
  */
 open class WidgetsBottomSheet @JvmOverloads constructor(
-        context: Context?,
+        context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int = 0
-) : BaseWidgetSheet(context!!, attrs, defStyleAttr), Insettable {
+) : BaseWidgetSheet(context, attrs, defStyleAttr), Insettable {
 
     private var originalItemInfo: ItemInfo? = null
     private val insets = Rect()

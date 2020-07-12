@@ -68,7 +68,7 @@ class UserEventDispatcher {
          * @param target       dest of the data
          * @param targetParent dest of the data
          */
-        fun fillInLogContainerData(v: View?, info: ItemInfo?, target: LauncherLogProto.Target?, targetParent: LauncherLogProto.Target?)
+        fun fillInLogContainerData(v: View?, info: ItemInfo, target: LauncherLogProto.Target, targetParent: LauncherLogProto.Target)
     }
 
     private var sessionStarted = false
