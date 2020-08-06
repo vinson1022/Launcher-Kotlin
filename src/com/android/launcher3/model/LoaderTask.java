@@ -455,7 +455,7 @@ public class LoaderTask implements Runnable {
                             }
 
                             boolean useLowResIcon = !c.isOnWorkspaceOrHotseat() &&
-                                    !verifier.isItemInPreview(c.getInt(rankIndex));
+                                    !verifier.isItemInPreview(0, c.getInt(rankIndex));
 
                             if (c.restoreFlag != 0) {
                                 // Already verified above that user is same as default user
@@ -748,7 +748,7 @@ public class LoaderTask implements Runnable {
                 for (ShortcutInfo info : folder.contents) {
                     if (info.usingLowResIcon
                             && info.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION
-                            && verifier.isItemInPreview(info.rank)) {
+                            && verifier.isItemInPreview(0, info.rank)) {
                         mIconCache.getTitleAndIcon(info, false);
                         numItemsInPreview++;
                     }

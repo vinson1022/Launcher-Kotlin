@@ -466,7 +466,7 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
     @Override
     public void invalidateParent(ItemInfo info) {
         FolderIconPreviewVerifier verifier = new FolderIconPreviewVerifier(getDeviceProfile().inv);
-        if (verifier.isItemInPreview(info.rank) && (info.container >= 0)) {
+        if (verifier.isItemInPreview(0, info.rank) && (info.container >= 0)) {
             View folderIcon = getWorkspace().getHomescreenIconByItemId(info.container);
             if (folderIcon != null) {
                 folderIcon.invalidate();
