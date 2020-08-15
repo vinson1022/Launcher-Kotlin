@@ -491,7 +491,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         if ((mBadgeInfo != null && mBadgeInfo.hasBadge()) || mBadgeScale > 0) {
             int offsetX = mBackground.getOffsetX();
             int offsetY = mBackground.getOffsetY();
-            int previewSize = (int) (mBackground.previewSize * mBackground.mScale);
+            int previewSize = (int) (mBackground.previewSize * mBackground.scale);
             mTempBounds.set(offsetX, offsetY, offsetX + previewSize, offsetY + previewSize);
 
             // If we are animating to the accepting state, animate the badge out.
