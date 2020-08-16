@@ -81,7 +81,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
     private CheckLongPressHelper mLongPressHelper;
     private StylusEventHelper mStylusEventHelper;
 
-    static final int DROP_IN_ANIMATION_DURATION = 400;
+    static final long DROP_IN_ANIMATION_DURATION = 400;
 
     // Flag whether the folder should open itself when an item is dragged over is enabled.
     public static final boolean SPRING_LOADING_ENABLED = true;

@@ -20,7 +20,7 @@ import android.graphics.drawable.Drawable
 /**
  * Manages the parameters used to draw a Folder preview item.
  */
-internal class PreviewItemDrawingParams(
+class PreviewItemDrawingParams(
         @JvmField
         var transX: Float,
         @JvmField

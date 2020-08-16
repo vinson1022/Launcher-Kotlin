@@ -10,9 +10,7 @@ import android.view.animation.DecelerateInterpolator
 import com.android.launcher3.ButtonDropTarget
 import com.android.launcher3.DropTarget.DragObject
 import com.android.launcher3.Launcher
-import com.android.launcher3.LauncherState
 import com.android.launcher3.LauncherState.NORMAL
-import com.android.launcher3.dragndrop.DragLayer
 import com.android.launcher3.dragndrop.DragLayer.ANIMATION_END_DISAPPEAR
 import com.android.launcher3.dragndrop.DragView
 import kotlin.math.abs
@@ -77,7 +75,7 @@ class FlingAnimation(
             mLauncher.stateManager.goToState(NORMAL)
             dropTarget.completeDrop(dragObject)
         }
-        dragLayer.animateView(dragObject.dragView, this, duration, tInterpolator,
+        dragLayer.animateView(dragObject.dragView, this, duration.toLong(), tInterpolator,
                 onAnimationEndRunnable, ANIMATION_END_DISAPPEAR, null)
     }
 

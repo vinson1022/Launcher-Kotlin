@@ -357,7 +357,7 @@ public class DragLayer extends BaseDragLayer<Launcher> {
      */
     public void animateView(final DragView view, final Rect from, final Rect to,
             final float finalAlpha, final float initScaleX, final float initScaleY,
-            final float finalScaleX, final float finalScaleY, int duration,
+            final float finalScaleX, final float finalScaleY, long duration,
             final Interpolator motionInterpolator, final Interpolator alphaInterpolator,
             final Runnable onCompleteRunnable, final int animationEndStyle, View anchorView) {
 
@@ -425,7 +425,7 @@ public class DragLayer extends BaseDragLayer<Launcher> {
                 anchorView);
     }
 
-    public void animateView(final DragView view, AnimatorUpdateListener updateCb, int duration,
+    public void animateView(final DragView view, AnimatorUpdateListener updateCb, long duration,
             TimeInterpolator interpolator, final Runnable onCompleteRunnable,
             final int animationEndStyle, View anchorView) {
         // Clean up the previous animations

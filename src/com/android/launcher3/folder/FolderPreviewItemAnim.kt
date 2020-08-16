@@ -23,9 +23,9 @@ import com.android.launcher3.LauncherAnimUtils
 /**
  * Animates a Folder preview item.
  */
-internal class FolderPreviewItemAnim(previewItemManager: PreviewItemManager,
+class FolderPreviewItemAnim(previewItemManager: PreviewItemManager,
                                      params: PreviewItemDrawingParams, index0: Int, items0: Int, index1: Int, items1: Int,
-                                     duration: Int, onCompleteRunnable: Runnable?) {
+                                     duration: Long, onCompleteRunnable: Runnable?) {
     private val animator: ValueAnimator
     @JvmField
     var finalScale: Float
@@ -66,7 +66,7 @@ internal class FolderPreviewItemAnim(previewItemManager: PreviewItemManager,
                     params.anim = null
                 }
             })
-            this.duration = duration.toLong()
+            this.duration = duration
         }
     }
 
