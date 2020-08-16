@@ -535,7 +535,7 @@ public class Folder extends AbstractFloatingView implements DragSource,
 
             float textWidth =  mFolderName.getPaint().measureText(mFolderName.getText().toString());
             float translation = (footerWidth - textWidth) / 2;
-            mFolderName.setTranslationX(mContent.mIsRtl ? -translation : translation);
+            mFolderName.setTranslationX(mContent.isRtl ? -translation : translation);
             mPageIndicator.prepareEntryAnimation();
 
             // Do not update the flag if we are in drag mode. The flag will be updated, when we
@@ -733,10 +733,10 @@ public class Folder extends AbstractFloatingView implements DragSource,
         boolean isOutsideLeftEdge = x < cellOverlap;
         boolean isOutsideRightEdge = x > (getWidth() - cellOverlap);
 
-        if (currentPage > 0 && (mContent.mIsRtl ? isOutsideRightEdge : isOutsideLeftEdge)) {
+        if (currentPage > 0 && (mContent.isRtl ? isOutsideRightEdge : isOutsideLeftEdge)) {
             showScrollHint(SCROLL_LEFT, d);
         } else if (currentPage < (mContent.getPageCount() - 1)
-                && (mContent.mIsRtl ? isOutsideLeftEdge : isOutsideRightEdge)) {
+                && (mContent.isRtl ? isOutsideLeftEdge : isOutsideRightEdge)) {
             showScrollHint(SCROLL_RIGHT, d);
         } else {
             mOnScrollHintAlarm.cancelAlarm();
