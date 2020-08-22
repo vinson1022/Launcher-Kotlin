@@ -43,7 +43,7 @@ class FolderAnimationManager(
     private val content = folder.mContent
     private val folderBackground = folder.background as GradientDrawable
     private val folderIcon = folder.mFolderIcon
-    private val previewBackground = folderIcon.mBackground
+    private val previewBackground = folderIcon.background
     private val context = folder.context
     private val launcher = folder.mLauncher
     private val duration = content.resources.getInteger(R.integer.config_materialFolderExpandDuration)
@@ -134,7 +134,7 @@ class FolderAnimationManager(
             play(a, getAnimator(folder, View.TRANSLATION_Y, yDistance, 0f))
             play(a, getAnimator(folder, LauncherAnimUtils.SCALE_PROPERTY, initialScale, finalScale))
             play(a, getAnimator(folderBackground, "color", initialColor, finalColor))
-            play(a, folderIcon.mFolderName.createTextAlphaAnimator(!isOpening))
+            play(a, folderIcon.folderName.createTextAlphaAnimator(!isOpening))
             val outlineProvider: RoundedRectRevealOutlineProvider = object : RoundedRectRevealOutlineProvider(
                     initialRadius, finalRadius, startRect, endRect) {
                 override fun shouldRemoveElevationDuringAnimation(): Boolean {

@@ -69,9 +69,8 @@ class PreviewItemManager(private val icon: FolderIcon) {
     }
 
     fun recomputePreviewDrawingParams() {
-        if (referenceDrawable != null) {
-            computePreviewDrawingParams(referenceDrawable!!.intrinsicWidth,
-                    icon.measuredWidth)
+        referenceDrawable?.apply {
+            computePreviewDrawingParams(intrinsicWidth, icon.measuredWidth)
         }
     }
 
@@ -80,8 +79,8 @@ class PreviewItemManager(private val icon: FolderIcon) {
             intrinsicIconSize = drawableSize.toFloat()
             totalWidth = totalSize
             prevTopPadding = icon.paddingTop
-            icon.mBackground.setup(icon.mLauncher, icon, totalWidth, icon.paddingTop)
-            icon.mPreviewLayoutRule.init(icon.mBackground.previewSize, intrinsicIconSize,
+            icon.background.setup(icon.launcher, icon, totalWidth, icon.paddingTop)
+            icon.layoutRule.init(icon.background.previewSize, intrinsicIconSize,
                     Utilities.isRtl(icon.resources))
             updatePreviewItems(false)
         }
@@ -93,19 +92,19 @@ class PreviewItemManager(private val icon: FolderIcon) {
         // create animations
         return if (index == -1) {
             getFinalIconParams(params)
-        } else icon.mPreviewLayoutRule.computePreviewItemDrawingParams(index, curNumItems, params)
+        } else icon.layoutRule.computePreviewItemDrawingParams(index, curNumItems, params)
     }
 
     private fun getFinalIconParams(params: PreviewItemDrawingParams?): PreviewItemDrawingParams? {
-        val iconSize = icon.mLauncher.deviceProfile.iconSizePx.toFloat()
+        val iconSize = icon.launcher.deviceProfile.iconSizePx.toFloat()
         val scale = iconSize / referenceDrawable!!.intrinsicWidth
-        val trans = (icon.mBackground.previewSize - iconSize) / 2
+        val trans = (icon.background.previewSize - iconSize) / 2
         params?.update(trans, trans, scale)
         return params
     }
 
-    fun drawParams(canvas: Canvas, params: ArrayList<PreviewItemDrawingParams>,
-                   transX: Float) {
+    private fun drawParams(canvas: Canvas, params: ArrayList<PreviewItemDrawingParams>,
+                           transX: Float) {
         canvas.translate(transX, 0f)
         // The first item should be drawn last (ie. on top of later items)
         for (i in params.indices.reversed()) {
@@ -161,7 +160,7 @@ class PreviewItemManager(private val icon: FolderIcon) {
         }
     }
 
-    fun buildParamsForPage(page: Int, params: ArrayList<PreviewItemDrawingParams>, animate: Boolean) {
+    private fun buildParamsForPage(page: Int, params: ArrayList<PreviewItemDrawingParams>, animate: Boolean) {
         val items = icon.getPreviewItemsOnPage(page)
         val prevNumItems = params.size
 
@@ -176,7 +175,7 @@ class PreviewItemManager(private val icon: FolderIcon) {
         for (i in params.indices) {
             val p = params[i]
             p.drawable = items[i].compoundDrawables[1]
-            if (p.drawable != null && !icon.mFolder.isOpen) {
+            if (p.drawable != null && icon.folder?.isOpen == false) {
                 // Set the callback to FolderIcon as it is responsible to drawing the icon. The
                 // callback will be released when the folder is opened.
                 p.drawable!!.callback = icon
@@ -284,17 +283,16 @@ class PreviewItemManager(private val icon: FolderIcon) {
 
     private fun updateTransitionParam(p: PreviewItemDrawingParams?, btv: BubbleTextView,
                                       prevIndex: Int, newIndex: Int, numItems: Int) {
-        p!!.drawable = btv.compoundDrawables[1]
-        if (!icon.mFolder.isOpen) {
+        p ?: return
+        p.drawable = btv.compoundDrawables[1]
+        if (icon.folder?.isOpen == false) {
             // Set the callback to FolderIcon as it is responsible to drawing the icon. The
             // callback will be released when the folder is opened.
             p.drawable?.callback = icon
         }
         val anim = FolderPreviewItemAnim(this, p, prevIndex, numItems,
                 newIndex, numItems, FolderIcon.DROP_IN_ANIMATION_DURATION, null)
-        if (p.anim != null && !p.anim!!.hasEqualFinalState(anim)) {
-            p.anim!!.cancel()
-        }
+        p.anim.takeIf { it != null && it.hasEqualFinalState(anim) }?.cancel()
         p.anim = anim
     }
 

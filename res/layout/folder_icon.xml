@@ -22,7 +22,7 @@
     android:focusable="true" >
     <com.android.launcher3.views.DoubleShadowBubbleTextView
         style="@style/BaseIcon.Workspace"
-        android:id="@+id/folder_icon_name"
+        android:id="@+id/name"
         android:focusable="false"
         android:layout_gravity="top"
         android:layout_width="match_parent"

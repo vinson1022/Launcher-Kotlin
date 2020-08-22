@@ -4,7 +4,7 @@ import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sin
 
-internal class ClippedFolderIconLayoutRule {
+class ClippedFolderIconLayoutRule {
     private val tmpPoint = FloatArray(2)
     private var availableSpace = 0f
     private var radius = 0f
