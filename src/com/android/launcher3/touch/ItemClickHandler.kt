@@ -47,7 +47,7 @@ object ItemClickHandler {
         val launcher = Launcher.getLauncher(v.context)
         if (!launcher.workspace.isFinishedSwitchingState) return
 
-        when(val tag = v.tag) {
+        when (val tag = v.tag) {
             is ShortcutInfo -> onClickAppShortcut(v, tag, launcher)
             is FolderInfo -> (v as? FolderIcon)?.let { onClickFolderIcon(it) }
             is AppInfo -> startAppShortcutOrInfoActivity(v, tag, launcher)
@@ -65,7 +65,7 @@ object ItemClickHandler {
      * @param v The view that was clicked. Must be an instance of [FolderIcon].
      */
     private fun onClickFolderIcon(v: View) {
-        val folder = (v as FolderIcon).folder
+        val folder = (v as FolderIcon).folder ?: return
         if (!folder.isOpen && !folder.isDestroyed) {
             // Open the requested folder
             folder.animateOpen()
@@ -160,7 +160,8 @@ object ItemClickHandler {
         }
         // Check for abandoned promise
         if (v is BubbleTextView && shortcut.hasPromiseIconUi()) {
-            val packageName = shortcut.intent.component?.packageName?: shortcut.intent.getPackage()!!
+            val packageName = shortcut.intent.component?.packageName
+                    ?: shortcut.intent.getPackage()!!
             if (!TextUtils.isEmpty(packageName)) {
                 onClickPendingAppItem(v, launcher, packageName,
                         shortcut.hasStatusFlag(ShortcutInfo.FLAG_INSTALL_SESSION_ACTIVE))

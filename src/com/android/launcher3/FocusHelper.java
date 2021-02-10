@@ -189,7 +189,7 @@ public class FocusHelper {
 
         public void handleNoopKey(int keyCode, View v) {
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                mFolder.mFolderName.requestFocus();
+                mFolder.getName().requestFocus();
                 playSoundEffect(keyCode, v);
             }
         }

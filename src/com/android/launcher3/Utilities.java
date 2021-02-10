@@ -128,7 +128,7 @@ public final class Utilities {
      */
     public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
             CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,
-            TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+            TimeUnit.SECONDS, new LinkedBlockingQueue<>());
 
     public static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
@@ -479,7 +479,7 @@ public final class Utilities {
      * Replacement for Long.compare() which was added in API level 19.
      */
     public static int longCompare(long lhs, long rhs) {
-        return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
+        return Long.compare(lhs, rhs);
     }
 
     public static SharedPreferences getPrefs(Context context) {

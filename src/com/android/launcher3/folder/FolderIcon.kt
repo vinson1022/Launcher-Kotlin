@@ -62,10 +62,6 @@ class FolderIcon : FrameLayout, FolderListener {
     }
 
     @JvmField
-    @Thunk
-    var folderName: BubbleTextView? = null
-
-    @JvmField
     var background = PreviewBackground()
     private var backgroundIsVisible = true
     private var previewVerifier: FolderIconPreviewVerifier? = null
@@ -73,7 +69,6 @@ class FolderIcon : FrameLayout, FolderListener {
     val previewItemManager by lazy { PreviewItemManager(this) }
     private var tmpParams: PreviewItemDrawingParams? = PreviewItemDrawingParams(0f, 0f, 0f, 0f)
     private val currentPreviewItems: MutableList<BubbleTextView> = ArrayList()
-    var animating = false
     private val tempBounds = Rect()
     private var slop = ViewConfiguration.get(context).scaledTouchSlop.toFloat()
     private val openAlarm = Alarm()
@@ -125,7 +120,7 @@ class FolderIcon : FrameLayout, FolderListener {
                 (dragInfo is AppInfo
                         || dragInfo is ShortcutInfo
                         || dragInfo is PendingAddShortcutInfo)) {
-            openAlarm.setAlarm(ON_OPEN_DELAY.toLong())
+            openAlarm.setAlarm(ON_OPEN_DELAY)
         }
     }
 
@@ -324,7 +319,7 @@ class FolderIcon : FrameLayout, FolderListener {
             background.drawBackground(canvas)
         }
         if (folder == null) return
-        if (folder!!.itemCount == 0 && !animating) return
+        if (folder!!.itemCount == 0) return
         val saveCount: Int
         if (canvas.isHardwareAccelerated) {
             saveCount = canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
@@ -359,12 +354,12 @@ class FolderIcon : FrameLayout, FolderListener {
     }
 
     var textVisible: Boolean
-        get() = folderName!!.visibility == View.VISIBLE
+        get() = name.visibility == View.VISIBLE
         set(visible) {
             if (visible) {
-                folderName!!.visibility = View.VISIBLE
+                name.visibility = View.VISIBLE
             } else {
-                folderName!!.visibility = View.INVISIBLE
+                name.visibility = View.INVISIBLE
             }
         }
 
@@ -429,7 +424,7 @@ class FolderIcon : FrameLayout, FolderListener {
     }
 
     override fun onTitleChanged(title: CharSequence) {
-        folderName!!.text = title
+        name.text = title
         contentDescription = context.getString(R.string.folder_name_format, title)
     }
 
@@ -485,16 +480,18 @@ class FolderIcon : FrameLayout, FolderListener {
         previewItemManager.onFolderClose(currentPage)
     }
 
+    fun getName() = name!!
+
     companion object {
         @Thunk
         var sStaticValuesDirty = true
-        const val DROP_IN_ANIMATION_DURATION: Long = 400
+        const val DROP_IN_ANIMATION_DURATION = 400L
 
         // Flag whether the folder should open itself when an item is dragged over is enabled.
         const val SPRING_LOADING_ENABLED = true
 
         // Delay when drag enters until the folder opens, in miliseconds.
-        private const val ON_OPEN_DELAY = 800
+        private const val ON_OPEN_DELAY = 800L
         private val BADGE_SCALE_PROPERTY: Property<FolderIcon, Float> = object : Property<FolderIcon, Float>(java.lang.Float.TYPE, "badgeScale") {
             override fun get(folderIcon: FolderIcon): Float {
                 return folderIcon.badgeScale
@@ -530,7 +527,7 @@ class FolderIcon : FrameLayout, FolderListener {
             icon.badgeRenderer = launcher.deviceProfile.mBadgeRenderer
             icon.contentDescription = launcher.getString(R.string.folder_name_format, folderInfo.title)
             val folder = Folder.fromXml(launcher)
-            folder.setDragController(launcher.dragController)
+            folder.dragController = launcher.dragController
             folder.folderIcon = icon
             folder.bind(folderInfo)
             icon.setFolder(folder)

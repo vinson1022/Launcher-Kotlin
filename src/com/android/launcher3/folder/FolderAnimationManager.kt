@@ -40,12 +40,12 @@ class FolderAnimationManager(
         private val folder: Folder,
         private val isOpening: Boolean
 ) {
-    private val content = folder.mContent
+    private val content = folder.getContent()
     private val folderBackground = folder.background as GradientDrawable
-    private val folderIcon = folder.mFolderIcon
+    private val folderIcon = folder.folderIcon
     private val previewBackground = folderIcon.background
     private val context = folder.context
-    private val launcher = folder.mLauncher
+    private val launcher = folder.launcher
     private val duration = content.resources.getInteger(R.integer.config_materialFolderExpandDuration)
     private val delay = content.resources.getInteger(R.integer.config_folderDelay)
     private val folderInterpolator = AnimationUtils.loadInterpolator(context, R.interpolator.folder_interpolator)
@@ -122,7 +122,7 @@ class FolderAnimationManager(
 
             // Initialize the Folder items' text.
             val colorResetListener: PropertyResetListener<*, *> = PropertyResetListener(BubbleTextView.TEXT_ALPHA_PROPERTY, 1f)
-            for (icon in folder.getItemsOnPage(folder.mContent.currentPage)) {
+            for (icon in folder.getItemsOnPage(folder.getContent().currentPage)) {
                 if (isOpening) {
                     icon.setTextVisibility(false)
                 }
@@ -134,7 +134,7 @@ class FolderAnimationManager(
             play(a, getAnimator(folder, View.TRANSLATION_Y, yDistance, 0f))
             play(a, getAnimator(folder, LauncherAnimUtils.SCALE_PROPERTY, initialScale, finalScale))
             play(a, getAnimator(folderBackground, "color", initialColor, finalColor))
-            play(a, folderIcon.folderName.createTextAlphaAnimator(!isOpening))
+            play(a, folderIcon.getName().createTextAlphaAnimator(!isOpening))
             val outlineProvider: RoundedRectRevealOutlineProvider = object : RoundedRectRevealOutlineProvider(
                     initialRadius, finalRadius, startRect, endRect) {
                 override fun shouldRemoveElevationDuringAnimation(): Boolean {
@@ -176,8 +176,8 @@ class FolderAnimationManager(
     private fun addPreviewItemAnimators(animatorSet: AnimatorSet, folderScale: Float,
                                         previewItemOffsetX: Int, previewItemOffsetY: Int) {
         val rule = folderIcon.layoutRule
-        val isOnFirstPage = folder.mContent.currentPage == 0
-        val itemsInPreview = if (isOnFirstPage) folderIcon.previewItems else folderIcon.getPreviewItemsOnPage(folder.mContent.currentPage)
+        val isOnFirstPage = folder.getContent().currentPage == 0
+        val itemsInPreview = if (isOnFirstPage) folderIcon.previewItems else folderIcon.getPreviewItemsOnPage(folder.getContent().currentPage)
         val numItemsInPreview = itemsInPreview.size
         val numItemsInFirstPagePreview = if (isOnFirstPage) numItemsInPreview else ClippedFolderIconLayoutRule.MAX_NUM_ITEMS_IN_PREVIEW
         val previewItemInterpolator = previewItemInterpolator

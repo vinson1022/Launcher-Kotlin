@@ -23,17 +23,17 @@
     android:orientation="vertical" >
 
     <com.android.launcher3.folder.FolderPagedView
-        android:id="@+id/folder_content"
+        android:id="@+id/content"
         android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="16dp"
-        launcher:pageIndicator="@+id/folder_page_indicator" />
+        launcher:pageIndicator="@+id/pageIndicator" />
 
     <LinearLayout
-        android:id="@+id/folder_footer"
+        android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
@@ -42,7 +42,7 @@
         android:paddingRight="12dp" >
 
         <com.android.launcher3.ExtendedEditText
-            android:id="@+id/folder_name"
+            android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -62,12 +62,11 @@
             android:textSize="@dimen/folder_label_text_size" />
 
         <com.android.launcher3.pageindicators.PageIndicatorDots
-            android:id="@+id/folder_page_indicator"
+            android:id="@+id/pageIndicator"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
-            />
+            android:elevation="1dp" />
 
     </LinearLayout>
 

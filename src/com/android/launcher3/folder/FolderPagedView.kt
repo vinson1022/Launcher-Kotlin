@@ -33,6 +33,7 @@ import com.android.launcher3.keyboard.ViewGroupFocusHelper
 import com.android.launcher3.pageindicators.PageIndicatorDots
 import com.android.launcher3.touch.ItemClickHandler
 import com.android.launcher3.util.Thunk
+import kotlinx.android.synthetic.main.user_folder_icon_normalized.view.*
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -74,7 +75,7 @@ class FolderPagedView(context: Context, attrs: AttributeSet?) : PagedView<PageIn
 
     fun setFolder(folder: Folder) {
         this.folder = folder
-        mPageIndicator = folder.findViewById(R.id.folder_page_indicator)
+        mPageIndicator = folder.findViewById(R.id.pageIndicator)
         initParentViews(folder)
     }
 
@@ -145,7 +146,7 @@ class FolderPagedView(context: Context, attrs: AttributeSet?) : PagedView<PageIn
         lp.cellX = item.cellX
         lp.cellY = item.cellY
         getPageAt(pageNo).addViewToCellLayout(
-                view, -1, folder!!.mLauncher.getViewIdForItem(item), lp, true)
+                view, -1, folder!!.launcher.getViewIdForItem(item), lp, true)
     }
 
     @SuppressLint("InflateParams")
@@ -255,14 +256,14 @@ class FolderPagedView(context: Context, attrs: AttributeSet?) : PagedView<PageIn
                     info.cellY = newY
                     info.rank = rank
                     if (saveChanges) {
-                        folder!!.mLauncher.modelWriter.addOrMoveItemInDatabase(info,
-                                folder!!.mInfo.id, 0, info.cellX, info.cellY)
+                        folder!!.launcher.modelWriter.addOrMoveItemInDatabase(info,
+                                folder!!.info.id, 0, info.cellX, info.cellY)
                     }
                 }
                 lp.cellX = info.cellX
                 lp.cellY = info.cellY
                 currentPage.addViewToCellLayout(
-                        v, -1, folder!!.mLauncher.getViewIdForItem(info), lp, true)
+                        v, -1, folder!!.launcher.getViewIdForItem(info), lp, true)
                 if (verifier.isItemInPreview(0, rank) && v is BubbleTextView) {
                     v.verifyHighRes()
                 }
@@ -284,7 +285,7 @@ class FolderPagedView(context: Context, attrs: AttributeSet?) : PagedView<PageIn
         // Update footer
         mPageIndicator!!.visibility = if (pageCount > 1) View.VISIBLE else View.GONE
         // Set the gravity as LEFT or RIGHT instead of START, as START depends on the actual text.
-        folder!!.mFolderName.gravity = if (pageCount > 1) if (isRtl) Gravity.RIGHT else Gravity.LEFT else Gravity.CENTER_HORIZONTAL
+        folder!!.name.gravity = if (pageCount > 1) if (isRtl) Gravity.RIGHT else Gravity.LEFT else Gravity.CENTER_HORIZONTAL
     }
 
     val desiredWidth: Int
@@ -391,7 +392,7 @@ class FolderPagedView(context: Context, attrs: AttributeSet?) : PagedView<PageIn
         val delta = scroll - scrollX
         if (delta != 0) {
             mScroller.setInterpolator(Interpolators.DEACCEL)
-            mScroller.startScroll(scrollX, 0, delta, 0, Folder.SCROLL_HINT_DURATION)
+            mScroller.startScroll(scrollX, 0, delta, 0, Folder.SCROLL_HINT_DURATION.toInt())
             invalidate()
         }
     }
